@@ -1,0 +1,25 @@
+cd F:\djangoproject\excelsite
+python manage.py runserver
+
+http://127.0.0.1:8000/admin/
+
+В файлк settings.py: LANGUAGE_CODE = 'ru'
+
+//добавление суперпользователя
+python manage.py createsuperuser
+root 1234   root@root.com  
+
+
+
+//файл korp/admin.py
+class pageAdmin(admin.ModelAdmin):
+    list_display = ('id','title','time_create','photo','is_published')
+    list_display_links = ('id','title')
+    search_fields = ('title','content')
+admin.site.register(Pages,pageAdmin)
+
+
+//файл korp/models.py
+content=models.TextField(blank=True, verbose_name='контент')
+
+

@@ -1,0 +1,155 @@
+html
+ {  margin:0; padding:0 ; background-color:#ffffff; }
+
+*  {   padding:0; margin:0; border-collapse:collapse; text-decoration:none; text-align: left; font-family:'Nunito',  "PT Sans",  Arial, Helvetica, sans-serif;    }
+
+img {border:0; }
+a {text-decoration:underline;}
+
+
+div#top {   background-color:#a4d8fd; 
+background-image:url('/images/fon.jpg');
+  background-position:50% 0px; background-repeat:repeat; margin-top:158px   }
+div#top * {     font-family: 'Oswald', "PT Sans",  Arial, Helvetica, sans-serif; }
+div#top  p  { text-align: left;  position:relative; top:0px; font-size:20px; line-height:40px }
+div#top  strong  { text-align: left;  position:relative; top:0px; font-size:40px; line-height:40px; font-weight:400;text-transform:uppercase; }
+
+
+
+
+
+   /* phones */
+div.customphones *   { text-align:center;   color:#fff; font-family: 'Oswald', "PT Sans",  Arial, Helvetica, sans-serif; }
+div.customphones  p, div.customphones a                {   position:relative; top:0px; font-size:21px; line-height:24px }
+div.customphones  p strong, div.customphones  strong a {   position:relative; top:0px; font-size:23px; line-height:24px; font-weight:400; }
+div.customphones img { position:relative; top:0px; left:0px}
+div.customphones a {  text-decoration:none; }
+div.customphones  {position:relative; top:0px; left:15px;  margin:0px;   }
+
+#patch {width:90px}
+div.moduletablehormenu    { position:relative; top:0px; left:-18px;  }
+
+#tdphones p { text-align:center;text-decoration:none;  font-size:20px; text-transform:uppercase; padding:0 7px; font-weight:400;
+  font-family: 'Oswald', "PT Sans",  Arial, Helvetica, sans-serif; color:#ffffff }
+  
+
+ /* hor menu  */
+ #menu  { z-index:5000; position:fixed; top:0; left:0; width:100%; padding:5px 0 ; background-color:#07356c ;}
+
+div.moduletablehormenu  {background-color:none ; width:100%;  margin:0px 0; padding:0 10px ; text-align:center   }
+div.moduletablehormenu   a { text-align:center;text-decoration:none;  font-size:18px; text-transform:uppercase; padding:0 7px; font-weight:400;
+  font-family: 'Oswald', "PT Sans",  Arial, Helvetica, sans-serif; color:#ffffff }
+div.moduletablehormenu  a:hover {   text-decoration:underline;}
+div.moduletable_usermenu   a,  div.moduletable_usermenu   span {white-space:  nowrap   }
+div.moduletablehormenu   a,  div.moduletablehormenu   span {white-space:  nowrap   }
+
+ /* usermenu2  */
+div.moduletable_usermenu *  { text-align:center  }
+div.moduletable_usermenu   {  width:100%;   margin-bottom:0px;  margin-top:120px; background-color:#2d29de  }
+div.moduletable_usermenu span  {   padding:0px; margin:5px 0;  }
+div.moduletable_usermenu span a  {display:inline-block;   text-align: center;
+ height:auto; color: #ffffff;  font-weight:400; text-decoration: none;
+padding:0px 10px;  margin:0px 10px;     font-size:15px; line-height:30px; height:30px; font-family: 'Oswald', "PT Sans",  Arial, Helvetica, sans-serif; }
+
+div.moduletable_usermenu span a:hover { background-color:#6da4e6 }
+div.moduletable, div.moduletablelabels, div.moduletable_katalog  {border:0px solid #f4595f; float:none; clear:both; width:100% }
+
+
+ 
+
+
+
+
+
+  /* breadcrumbs */
+.breadcrumbs, .article-info { padding: 7px;margin: 0 0 18px;list-style: none; font-size:12px; }
+
+
+ div.moduletable h3, div.moduletable_news h3, div.moduletable_katalog h3, div.moduletablepartners h3
+    { text-align:center; font-size:27px; line-height:32px; text-transform:uppercase; margin-bottom:10px;
+ font-weight:400; font-family: 'Oswald', "PT Sans",  Arial, Helvetica, sans-serif; }
+
+
+ 
+/* cp */
+#middletable { width:100% ;  border:1px solid red; margin:20px 0px 0px 0px;}
+#center  {padding:0px 0px 30px 50px; vertical-align:top; border:2px solid green } 
+
+    /* maket */
+div.wrapper { text-align:center; padding:0 0px; float:none; clear:both;  min-width:1100px;   }
+div.center { margin: auto; width:1100px; border:1px solid brown;    }
+
+
+
+ 
+
+div#content p , div#content ul li
+ {   margin:0; padding:0; font-size:17px; line-height:22px; text-align:justify;  }    /*   page    */
+div#content   a {color:#003399; text-decoration:underline; font-weight:800 }
+div#content  p  {margin:15px auto}
+div#content ul li, div#content ol li {margin-left:50px}
+
+
+
+
+
+@media screen and (max-width: 1400px)
+ {
+ div.customphones  {position:relative; top:0px; left:30px;  margin:0px;   }
+ }
+
+ul.menu_usermenu li a { font-size:16px; line-height:26px;}
+
+
+/* polosa snizu */
+div.under {  background-color:#0d30b3;  border-top:5px solid #2895fb; padding:10px 0 }
+div.under  { background-color:#182664; background-position:50% 100%; background-image:url(/images/fon2.jpg); color:#fff; text-align:center  }
+div.under  {text-align: center;  width:100%;  margin:10px auto 10px auto;    }
+div.under  *     {text-align: center;   margin:auto;  font-size:16px; line-height:26px; color:#fff }
+div.under p strong { font-weight:400; }
+#mxcpr, #mxcpr a    { font-size:10px; }
+
+
+
+
+ .mobonly  { display:none  }
+ .notmob    {  display:block;  }
+div.item-page img {max-width:700px}
+
+
+
+div#top { border:1px solid brown ;
+   display: flex;
+  flex-direction: row;  height: auto;  align-items: center;  flex-wrap: wrap;  justify-content:space-between;
+  align-content: center;  align-items: center; 
+margin:auto; margin-top:70px;
+ }
+ 
+ 
+div#top1 {width:15%; border:0px solid brown}
+div#top2 {width:80%; border:0x solid brown}
+
+
+
+
+ h1, div.jg-header, div.blog h2 span.subheading-category  {   text-align:center;  font-size:32px; line-height:39px;   margin:10px 0; font-weight:400;  border-bottom:1px dotted #625b5b;  }
+ h2                 {     font-size:29px; line-height:39px;   margin:10px 0; font-weight:400;  }
+ div.item-page h3                 {     font-size:26px; line-height:32px;   margin:10px 0; font-weight:400;    }
+ h4                 {     font-size:26px; line-height:32px;   margin:10px 0; font-weight:400;    }
+ h5                 {     font-size:23px; line-height:29px;   margin:10px 0; font-weight:400;    }
+ h6                 {     font-size:20px; line-height:26px;   margin:10px 0; font-weight:800;  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,71 @@
+{%  load static %}
+
+<!doctype html>
+<html class="no-js" xmlns="http://www.w3.org/1999/xhtml" lang="ru" dir="ltr" prefix="og: http://ogp.me/ns#" > <!--<![endif]-->
+<head>
+<script src="/dop/jquery-3.2.1.min.js"  ></script>
+
+<meta name="description" content="РССП Регистр системы сертификации персонала - Автономная некоммерческая организация" />
+    <title>  {{ title }} </title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+     <link rel="stylesheet"  href="{%  static 'korp/css/user.css' %} "  />
+
+
+
+ <link href='https://fonts.googleapis.com/css?family=PT+Sans:400,700&amp;subset=latin,cyrillic-ext' rel='stylesheet' type='text/css'>
+ <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500&display=swap" rel="stylesheet">
+ <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;1,200;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet">
+ <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body >
+
+<!--   menu   -->
+  <div class="wrapper menu" id="menu"    >
+       <div class="center" >
+<table>
+  <tr>
+    <td id="tdmenu">
+{% include "korp/menu.html" %}
+	 </td>
+    <td id="patch" ></td>
+    <td id="tdphones">  		<p>+7 (499) 678-20-12</p>
+<p>info@rssp.com.ru</p>
+	 </td>
+  </tr>
+</table>
+        </div>    <!--  center    -->
+   </div>         <!--   wrapper   -->
+<!--   menu   -->
+
+
+<!--   top   -->
+<div class="wrapper"  style="background-image: url('{% static '/images/fon.jpg' %}')" >
+       <div class="center" id="top" >
+	   {% include "korp/top.html" %}
+        </div>    <!--  center    -->
+   </div>         <!--   wrapper   -->
+<!--   top   -->
+
+
+<!--   content   -->
+  <div class="wrapper" >
+       <div class="center" id="content" >
+        <h1>   {{ title }} </h1>
+	    {% block content %}   {% endblock %}
+        </div>    <!--  center    -->
+   </div>         <!--   wrapper   -->
+<!--   content   -->
+
+
+<!--   polosa   -->
+  <div class="wrapper under" >
+       <div class="center" >
+	 {% include "korp/polosa.html" %}
+        </div>    <!--  center    -->
+   </div>         <!--   wrapper   -->
+<!--   polosa   -->
+
+
+</body>
+</html>
