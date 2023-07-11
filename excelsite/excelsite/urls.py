@@ -36,6 +36,7 @@ urlpatterns = [
     path('form/', form, name='form_ref'),
     path('login/', login, name='login_ref'),
     path('kurses/', kurses, name='kurses_ref'),
+    path('postkurs/', postkurs, name='postkurs_ref'),
     path('project/', project, name='projects_ref'),
     path('proj/<int:post_id>/', kurs, name="proj_ref"),
     path('category/<int:categ_id>/', categs, name="category_ref"),

@@ -43,3 +43,14 @@ class Category (models.Model):
         return reverse('category_ref', kwargs={'cat_id': self.pk})
 
 
+class Application  (models.Model):
+    name = models.CharField(max_length=255, blank=False,verbose_name='ФИО клиената' )
+    email = models.EmailField(max_length=255,blank=False,verbose_name='Email клиента', unique=True)
+    phone = models.CharField(max_length=255, blank=False,verbose_name='Телефон клиента')
+    area = models.CharField(max_length=255, blank=False,verbose_name='Тип курса')
+    conf=models.IntegerField(default=True, verbose_name='Согласие на обработку данных')
+
+    def __str__(self):
+        return  self.name
+
+

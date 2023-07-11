@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpRequest, HttpResponseNotFound,Http404
 from proc.go_ import *
+from korp.forms import  *
+from django.shortcuts import redirect
 
 menu=get_menu()
 
@@ -59,10 +61,28 @@ def contacts (request):
     return render(request, 'korp/page.html', context=context)
 
 def form (request):
-    title = 'Форма обратной связи'
+
+
+    title = 'Форма заявки на курс'
+    if request.method=="POST":
+        form=addApplForm(request.POST)
+        if form.is_valid():
+            print(form.cleaned_data)
+            try:
+                Application.objects.create(**form.cleaned_data)
+                return redirect('home')
+            except:
+                form.add_error(None,'Ошибка добавления клиента')
+    else:
+        form = addApplForm()
+
+    context = {'menu': menu, 'title': title, 'form':form}
+    return render(request, 'korp/form_appl.html', context=context)
+
+def postkurs (request):
+    title = 'Форма добавления курса (для зарегистрированного клиента)'
     page = get_pages(4)
     content = page.content
-    raise  Http404()
     context = {'menu': menu, 'title': title, 'content': content}
     return render(request, 'korp/page.html', context=context)
 
@@ -71,6 +91,7 @@ def login (request):
     title = 'ЛОГИН КЛИЕНТА'
     content = "ЛОГИН КЛИЕНТА"
     context = {'menu': menu, 'title': title, 'content': content}
+    raise Http404()
     return render(request, 'korp/page.html', context=context)
 
     #return HttpResponse('Login')

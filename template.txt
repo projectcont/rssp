@@ -32,3 +32,12 @@ https://stackoverflow.com/questions/5898776/how-to-refer-to-static-files-in-my-c
 urlpatterns = [
     path('', company),
     path('projects/', projects, name="proj"),
+	
+	
+	//пользовательские теги
+создаем каталог /templatetags 
+добавляем в него  файл korp_tags.ry
+
+from django import template
+from korp.models import *
+{% load korp_tags %}

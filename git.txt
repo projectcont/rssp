@@ -12,9 +12,8 @@ REM git log
 
 
 
-cd\
-cd F:\python_dop\recent\stm\
-git commit -a -m  "16_1 sept 2022"
+F:; cd F:\djangoproject\ 
+git commit -a -m  "07 july 2023"
 git push origin main
 REM git push -u -f origin main
 

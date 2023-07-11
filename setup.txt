@@ -19,24 +19,9 @@ python manage.py  startapp korp
 в файле settings.py (INSTALLED_APPS =) регистрируем 'korp.apps.KorpConfig'
 
 -----------------------------------------
-cd F:\djangoproject\excelsite
+
+cd F:\djangoproject\excelsite 
 python manage.py runserver
-
-
----------------------------------
-
-
-ВЫПОЛНЕНИЕ МИГРАЦИИ ДАННЫХ
-
-После добавления моделей  (в файле korp.models )
-python manage.py makemigrations
-
-	Проверка SQL запросов
-	python manage.py sqlmigrate korp 0004
-
-Выполнение миграции
-python manage.py migrate
-
 
 
 ----------------------
@@ -109,6 +94,11 @@ https://django.fun/ru/docs/django/4.1/topics/templates/
 
 Как наполнить базу данных Django дефолтными данными
 https://www.youtube.com/watch?v=qCzODIPu1v0
+
+
+forms.ModelChoiceField
+https://docs.djangoproject.com/en/dev/ref/models/fields/#choices
+https://docs.djangoproject.com/en/4.2/ref/forms/fields/#charfield
 
 
 
