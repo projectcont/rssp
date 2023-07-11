@@ -1,0 +1,28 @@
+{% extends 'korp/base.html'  %}
+{%  load static %}
+
+
+{% block content %}
+
+
+<form action="{% url 'form_ref' %}" method="post">
+    {% csrf_token %}
+
+     <div class="form-error"  > {{ form.non_field_errors  }}  </div>
+
+      {% for f in form %}
+<p> <label class="form-label" for="{{ f.id_for_label }}"> {{ f.label }}</label>  {{ f }}</p>
+    <div class="form-error"  > {{ f.error  }}  </div>
+
+     {% endfor %}
+
+
+    <input type="submit" value="Отправить" />
+</form>
+
+
+
+
+{% endblock %}
+
+# https://docs.djangoproject.com/en/4.2/ref/forms/fields/#charfield

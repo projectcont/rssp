@@ -1,0 +1,16 @@
+
+
+
+ВЫПОЛНЕНИЕ МИГРАЦИИ ДАННЫХ
+В ТЕРМИНАЛЕ
+
+После добавления моделей  (в файле korp.models )
+python manage.py makemigrations
+
+	Проверка SQL запросов
+	python manage.py sqlmigrate korp 0004
+
+Выполнение миграции
+python manage.py migrate
+
+

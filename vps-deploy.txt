@@ -1,0 +1,8 @@
+DEPLOY ON VPS
+
+https://ngangasn.com/a-detailed-guide-on-deploying-django-website-hosting-tips-and-checklist/
+https://ngangasn.com/should-i-consider-linux-or-windows-web-hosting/
+https://ngangasn.com/deploying-django-website-on-linux-server-with-gunicorn/
+https://ngangasn.com/category/web-hosting/page/2/
+https://ngangasn.com/how-to-set-up-django-development-environment-on-linux-the-right-way/
+
