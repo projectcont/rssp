@@ -8,6 +8,9 @@ F:\djangoproject\venv3\Scripts\activate  (.\venv3\Scripts\activate)
 pip install Django==4.2
 pip install mysqlclient
 pip install Pillow
+pip install nginx
+pip install gunicorn
+
 
 	# create project (excelsite)
 cd F:\djangoproject
@@ -25,53 +28,15 @@ python manage.py runserver
 
 
 ----------------------
-CRUD
-cd F:\djangoproject\excelsite
-python manage.py shell
-
-	Наполнение данных
-from korp.models import Pages
-p1=Pages (title='Об организации',content='22222')
-p1.save()
-
-или    Pages.objects.create(title='Проекты',content='22222 Проекты')
-	   Category.objects.create(name='Проекты')
-
-
-    взятие данных
-from korp.models import Menu
-Menu.objects.all()    # берет все записи
-Menu.objects.filter(title="О компании")   # берет по фильтру 
-Menu.objects.get(title="О компании")   # берет только одну запись
-Menu.objects.all().order_by('title')    # берет в нужном порядке
-v=Menu.objects.all()
-print(v[1].title)
-
-	изменение данных
-v=Menu.objects.get(pk=2)
-v.content="different"
-v.save
-
-v=Pages.objects.all  (все страницы)
-v.update(cat_id=1)
-
-
-
-
-	удаление данных
-v=Menu.objects.get(pk=2)
-v.delete()
-
-
-
----------------------------------------
 
 
 
 
 
 
-http://127.0.0.1:8000/
+
+http://127.0.0.1:8000/korp/css/user.css
+
 http://127.0.0.1:8000/
 http://127.0.0.1:8000/projects
 http://127.0.0.1:8000/contacts
@@ -105,3 +70,4 @@ https://docs.djangoproject.com/en/4.2/ref/forms/fields/#charfield
 
 
 
+static/korp

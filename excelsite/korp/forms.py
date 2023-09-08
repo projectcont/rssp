@@ -13,7 +13,16 @@ class addApplForm (forms.Form):
     name=forms.CharField(max_length=255, label='ФИО',)
     email = forms.EmailField(max_length=255, label='Email', )
     phone = forms.CharField(max_length=255, label='Телефон', )
-
-    conf = forms.BooleanField(required=True, label='Подтв')
+    conf = forms.BooleanField(required=True, label='Подтверждаю согласие на обработку персональных данных',)
     #area = forms.CharField(max_length=255, label='область',choices=CHOICES ),
-    area = forms.ChoiceField(choices=CHOICES,label='область',)
+    area = forms.ChoiceField(choices=CHOICES,label='Область сертификации',)
+
+class addPageForm(forms.ModelForm):
+    def __init__(self,*args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['cat'].empty_label = "Категория не выбрана"
+
+    class Meta:
+        model=Pages
+        fields=['title','content','cat']
+        #fields='__all__'

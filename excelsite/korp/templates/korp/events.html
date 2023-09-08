@@ -1,0 +1,36 @@
+{% extends 'korp/base.html'  %}
+{%  load static %}
+
+
+{% block content %}
+
+
+
+{%  for page in pages  %}
+
+
+<table class="blog">
+    <tr>
+        <td class="td_img">
+            {% if page.photo %}
+  <img src="{{page.photo.url}}" class="blogphoto">
+{% endif %}
+        </td>
+
+         <td class="td_content">
+             <a href="{{page.get_absolute_url}}" class="blog_title"><h3>{{page.title}}</h3></a>
+
+
+             <div class="blog_content">{{page.content |  truncatewords:40 }}</div>
+                <a href="{{page.get_absolute_url}}"  class="blog_podr">
+                    Подробнее...
+                </a>
+
+         </td>
+
+
+    </tr>
+</table>
+{%  endfor  %}
+
+{% endblock %}

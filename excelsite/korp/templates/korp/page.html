@@ -3,8 +3,13 @@
 
 
 {% block content %}
+
+{% if page.photo %}
+  <img src="{{page.photo.url}}" class="eventphoto">
+{% endif %}
+
 {% autoescape off %}
-    {{ content }}
+    {{ page.content }}
 {% endautoescape %}
 
 

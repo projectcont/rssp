@@ -1,6 +1,13 @@
 
 {{ title }}
 
+{% if n > 0 %}
+    <p>Число положительное</p>
+{% else %}
+    <p>Число отрицательное или равно нулю</p>
+{% endif %}
+
+
 	
 	# if menu is a list of strings
 {% for m in menu %}

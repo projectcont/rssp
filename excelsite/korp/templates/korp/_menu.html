@@ -1,7 +1,12 @@
+{% load korp_tags %}
+
 {% block menu %}
+
         <div class="moduletablehormenu">
             {%  for m in menu  %}
-            <a href="{%  url m.urlname %}">{{m.title}} </a>
+<a href="{%  url m.urlname %}"> {{m.title}} </a>
+
+
             {%  endfor  %}
         </div>
 {% endblock %}

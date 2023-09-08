@@ -4,12 +4,13 @@
 <!doctype html>
 <html class="no-js" xmlns="http://www.w3.org/1999/xhtml" lang="ru" dir="ltr" prefix="og: http://ogp.me/ns#" > <!--<![endif]-->
 <head>
-<script src="/dop/jquery-3.2.1.min.js"  ></script>
+
 
 <meta name="description" content="РССП Регистр системы сертификации персонала - Автономная некоммерческая организация" />
     <title>  {{ title }} </title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
      <link rel="stylesheet"  href="{%  static 'korp/css/user.css' %} "  />
+    <link rel="stylesheet"  href="{%  static 'korp/css/small.css' %} "  />
 
 
 
@@ -27,7 +28,7 @@
 <table>
   <tr>
     <td id="tdmenu">
-{% include "korp/menu.html" %}
+{% include "korp/_menu.html" %}
 	 </td>
     <td id="patch" ></td>
     <td id="tdphones">  		<p>+7 (499) 678-20-12</p>
@@ -41,12 +42,18 @@
 
 
 <!--   top   -->
-<div class="wrapper"  style="background-image: url('{% static '/images/fon.jpg' %}')" >
-       <div class="center" id="top" >
-	   {% include "korp/top.html" %}
+<div class="wrapper" id="top" >
+       <div class="center"  >
+	   {% include "korp/_top.html" %}
         </div>    <!--  center    -->
    </div>         <!--   wrapper   -->
 <!--   top   -->
+
+<!--   slider   -->
+{% if page.pk == 1 %}
+    {% include "korp/_particle.html" %}
+{% endif %}
+<!--   slider   -->
 
 
 <!--   content   -->
@@ -62,11 +69,17 @@
 <!--   polosa   -->
   <div class="wrapper under" >
        <div class="center" >
-	 {% include "korp/polosa.html" %}
+	 {% include "korp/_polosa.html" %}
         </div>    <!--  center    -->
    </div>         <!--   wrapper   -->
 <!--   polosa   -->
 
+
+
+<style>
+div#top {background-image:url('{%  static 'korp/images/fon.jpg' %}'); }
+div.under {background-image:url('{%  static 'korp/images/fon2.jpg' %}'); }
+</style>
 
 
 </body>
