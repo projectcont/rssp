@@ -1,0 +1,12 @@
+{% extends 'korp/base.html'  %}
+{%  load static %}
+
+{% block content %}
+<h3> <a href="/korp/projects"/>Курсы сертификации</a></h3>
+<h2> Название курса сертификации:</h2>
+<h2>{{project.title}}</h2>
+<h2> Цена (руб): </h2>
+    <h2>
+{{project.pricerub}}</h2>
+
+{% endblock %}
