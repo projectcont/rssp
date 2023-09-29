@@ -4,9 +4,11 @@ from proc.go_ import *
 from korp.forms import  *
 from django.shortcuts import redirect
 from django.views import View
+from django.views.generic  import ListView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 menu=get_menu()
+
 
 
 
@@ -14,7 +16,7 @@ def index(request:HttpRequest):
     return HttpResponse('Страница корпоративного сайта')
 
 
-
+#-------------------------------------------------------------------------------------------------
 def company (request:HttpRequest):
     title='О компании'
     page = get_pages(1)
@@ -24,13 +26,18 @@ def company (request:HttpRequest):
     return render(request=request,template_name='korp/page.html', context=context )
 
 
-def projects (request:HttpRequest):
-    title='Проекты'
-    menuitem =6
-    page = get_pages(6)
-    content=page.content
-    context = {'menu':menu, 'title':title, 'content': content }
-    return render(request=request,template_name='korp/page.html',context=context )
+
+#-------------------------------------------------------------------------------------------------
+class ListProjects(ListView):
+    '''показывает список курсов (проектов) '''
+    model=Kurs
+
+class ShowProject(DetailView):
+    '''показывает список курсов (проектов) '''
+    model=Kurs
+    context_object_name = "project"
+    template_name = 'korp/project.html'
+
 
 #-------------------------------------------------------------------------------------------------
 def events (request:HttpRequest):
@@ -43,8 +50,7 @@ def events (request:HttpRequest):
     context={'menu': menu, 'title': title, 'content': content, 'pages': pages, 'menuitem':menuitem}
     return render(request=request,template_name='korp/events.html',context=context )
 
-
-
+#-------------------------------------------------------------------------------------------------
 def event (request:HttpRequest, post_id:int):
     '''показывает страницу одного события '''
     page = get_pages(post_id)
@@ -54,6 +60,7 @@ def event (request:HttpRequest, post_id:int):
 
 
 
+#-------------------------------------------------------------------------------------------------
 def postevent (request:HttpRequest):
     '''форма добавления события'''
     title = 'Форма добавления курса (для зарегистрированного клиента)'
@@ -111,14 +118,25 @@ def project (request:HttpRequest)-> HttpResponse:
     context = {'menu': menu, 'title': title, 'content': content, 'menuitem':menuitem}
     return render(request=request, template_name='korp/page.html', context=context)
 
+'''
+def contacts (request:HttpRequest)-> HttpResponse:
+    title='Контакты'
+    page = get_pages(1)
+    menuitem =1
+    content=page.content
+    context = {'menu': menu, 'title': title, 'content': content,'menuitem':menuitem}
+    return render(request=request, template_name='korp/page.html', context=context)
+'''
 
 def contacts (request:HttpRequest)-> HttpResponse:
     title='Контакты'
     page = get_pages(2)
-    menuitem =2
+    menuitem=1
     content=page.content
-    context = {'menu': menu, 'title': title, 'content': content,'menuitem':menuitem}
-    return render(request=request, template_name='korp/page.html', context=context)
+    context = {'menu': menu, 'title': title, 'content': content, 'page': page}
+    return render(request=request,template_name='korp/page.html', context=context )
+
+
 
 
 
@@ -159,6 +177,8 @@ def login (request:HttpRequest):
     #return HttpResponse('Login')
 
 
+def valuta (request:HttpRequest):
+    return HttpResponse(f'Выбрана валюта')
 
 def pageNotFound (request:HttpRequest,exception):
     return HttpResponseNotFound('Страница ошибка')

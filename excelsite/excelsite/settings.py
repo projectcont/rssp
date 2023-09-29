@@ -40,7 +40,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     #'korp.apps.KorpConfig',
     'korp',
+    'tinymce',
 ]
+
+TINYMCE_JS_URL = 'tiny_mce/tiny_mce.js'
+TINYMCE_JS_ROOT = 'tiny_mce'
+TINYMCE_DEFAULT_CONFIG = {'theme': "advanced", 'theme_advanced_toolbar_location' : "top", 'height': '400'}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -120,8 +125,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR,'static')
-#STATICFILES_DIRS = []
+STATIC_ROOT = os.path.join(BASE_DIR,'static')  #to after collect
+STATICFILES_DIRS = []
 
 MEDIA_ROOT=os.path.join(BASE_DIR,'media')
 MEDIA_URL='/media/'

@@ -1,5 +1,9 @@
 from django.db import models
 from django.urls import reverse
+from django.db import models
+
+
+
 
 # Create your models here.
 class Pages (models.Model):
@@ -10,6 +14,7 @@ class Pages (models.Model):
     time_update=models.DateTimeField(auto_now=True, verbose_name='Модифицировано')
     is_published=models.BooleanField(default=True, verbose_name='Публикация')
     cat=models.ForeignKey('Category', on_delete=models.PROTECT, null=True, verbose_name='Категория')
+
 
     def get_absolute_url (self):
         return reverse('proj_ref',kwargs={'post_id':self.pk})

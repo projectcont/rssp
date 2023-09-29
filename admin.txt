@@ -7,7 +7,9 @@ http://127.0.0.1:8000/admin/
 
 //добавление суперпользователя
 python manage.py createsuperuser
-root 1234   root@root.com  
+логин root  
+пароль sBa2v2v3  
+email root@root.com  
 
 
 

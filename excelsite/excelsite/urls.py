@@ -25,6 +25,7 @@ from korp.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('korp/', include('korp.urls')),
+
 ]
 
 
@@ -45,7 +46,9 @@ urlpatterns = [
 
 ]
 '''
-urlpatterns.extend(static(settings.STATIC_URL, document_root=settings.STATIC_ROOT))
+
+urlpatterns.extend(  static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)   )
+
 
 #urlpatterns+=static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
@@ -53,4 +56,6 @@ urlpatterns.extend(static(settings.STATIC_URL, document_root=settings.STATIC_ROO
 if settings.DEBUG:
     urlpatterns+=static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 '''
+
+urlpatterns+=static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

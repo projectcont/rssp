@@ -15,9 +15,12 @@ urlpatterns = [
     path('proj/<int:post_id>/', event, name="proj_ref"),
     path('postevent/', postevent, name='postevent_ref'),
 
-    path('project/', project, name='projects_ref'),
+    path('projects/', ListProjects.as_view(), name='projects_ref'),
+    path('project/<int:pk>', ShowProject.as_view(), name='project_ref'),
 
     path('category/<int:categ_id>/', categs, name="category_ref"),
+
+    path('valuta/', valuta, name="valuta_ref"),
 ]
 
 handler404=pageNotFound
