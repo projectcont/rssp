@@ -1,0 +1,122 @@
+{% extends 'base.html'  %}
+{%  load static %}
+{%  load korp_tags %}
+
+{% block content %}
+<div id="itempage">
+
+
+     <h1>     {{item.title}}
+     <span style="color:#dd7a04">
+     {% if item.get_rentsale == "rent"    %} (АРЕНДА)  {% endif %}
+    {% if item.get_rentsale == "sale"    %}   (ПРОДАЖА)  {% endif %}
+    {% if item.get_rentsale == "salerent"    %} (АРЕНДА, ПРОДАЖА) {% endif %}
+    {% if item.get_rentsale == "noprice"    %} ТИП СДЕЛКИ НЕ УКАЗАН {% endif %}
+ </span>
+ (id {{item.idl}}  {{item.categ}}   )
+ </h1>
+     <h2> Адрес: {{item.adres}}</h2>
+
+
+<div class="flexcontainer">
+
+    <div style="width:30%" >
+
+
+
+   {% if item.price_rent  %}  <h2> Цена  <span style="color:#dd7a04"> (аренды)</span>:&nbsp;&nbsp; {{item.price_rent | space_format }} руб./месяц    </h2> {% endif %}
+   {% if item.price_sale  %}  <h2> Цена  <span style="color:#dd7a04"> (продажи)</span>: {{item.price_sale | space_format }} руб.           </h2> {% endif %}
+     <h2>
+         Площадь: {{item.square}} м<sup>2</sup>
+     </h2>
+
+        <h2>  Округ Москвы:   {{ item.get_okrug_title }} </h2>
+
+    </div>
+
+    <div style="width:65%" > <p> {% if item.description  %} {{ item.description   }} {% endif %} </p> </div>
+
+</div> <!-- flexcontainer -->
+
+
+
+<div class="flexcontainer">
+
+<div id="item_content">
+
+
+
+<table style="width:100%" id="features">
+
+    {%  for v in itemfields  %}
+      {% if v.0 in exclude or v.2 == None  %}
+      {% else %}
+     <tr>    <td> {{v.1}}  </td> <td>  {{v.2}} </td> </tr>
+      {% endif %}
+{%  endfor  %}
+
+
+
+
+
+</table>
+
+    <br/>
+     {% include "form/form_client.html" %}
+
+</div>
+
+<div id="item_image">
+    <img src="{{item.photo.url}}" >
+    </div> <!--item_image-->
+
+    </div> <!--flexwrapper-->
+
+ {% if item.map  %}
+    <h3> ЛОКАЦИЯ НА КАРТЕ </h3>
+ {% autoescape off %} {{item.get_map}} {% endautoescape %}
+    {% endif %}
+
+
+ <table style="width:100%" id="photos">
+
+    <tr>
+	<td>{% if item.photo1  %}   <img src="{{item.photo1.url}}" class="photos">     {% endif %}</td>
+	<td>{% if item.photo2  %} <img src="{{item.photo2.url}}" class="photos"> {% endif %} </td>
+	</tr>
+
+     <tr>
+	<td>{% if item.photo3  %}   <img src="{{item.photo3.url}}" class="photos">     {% endif %}</td>
+	<td>{% if item.photo4  %} <img src="{{item.photo4.url}}" class="photos"> {% endif %} </td>
+	</tr>
+
+     <tr>
+	<td>{% if item.photo5  %}   <img src="{{item.photo5.url}}" class="photos">     {% endif %}</td>
+	<td>{% if item.photo6  %} <img src="{{item.photo6.url}}" class="photos"> {% endif %} </td>
+	</tr>
+
+     <tr>
+	<td>{% if item.photo7  %}   <img src="{{item.photo7.url}}" class="photos">     {% endif %}</td>
+	<td>{% if item.photo8  %} <img src="{{item.photo8.url}}" class="photos"> {% endif %} </td>
+	</tr>
+
+
+     <tr>
+	<td>{% if item.photo9  %}   <img src="{{item.photo9.url}}" class="photos">     {% endif %}</td>
+	<td>{% if item.photo10  %} <img src="{{item.photo10.url}}" class="photos"> {% endif %} </td>
+	</tr>
+
+</table>
+
+
+  </div>  <!--itempage-->
+
+
+
+
+
+
+
+
+
+{% endblock %}

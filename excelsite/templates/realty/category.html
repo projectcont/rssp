@@ -1,0 +1,22 @@
+{% extends 'base.html'  %}
+{%  load static %}
+{% load korp_tags %}
+
+{% block content %}
+
+
+
+
+<div class="blog">
+
+{%  for item in items  %}
+    {% if item.is_published %}
+        <!-- blog item  -->
+             {% include "realty/category_item.html" %}
+         <!-- blog item  -->
+     {% endif %}
+{%  endfor  %}
+
+    </div> <!-- blog  -->
+
+{% endblock %}

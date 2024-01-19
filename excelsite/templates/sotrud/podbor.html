@@ -1,0 +1,62 @@
+{% extends 'sotrud/sotr.html'  %}
+{%  load static %}
+{%  load korp_tags %}
+
+{% block content %}
+<div id="itempage">
+<h1> ЗАЯВКА (id{{item.pk }}). ПОДБОР ОБЪЕКТОВ</h1>
+
+    <table class="zayavki" style="margin:0px 0 20px 0"  >
+
+<!--  Клиент -->
+    <tr style="background-color:#569ccb">
+        <td>  Клиент {{item.client.name }} </td>
+        <td> {% if item.client.phone    %}  Телефон {{item.client.phone }}   {% endif %}  </td>
+       <td> {% if item.client.whatsapp    %}  Whatsapp {{item.client.whatsapp }}   {% endif %}  </td>
+        <td> {% if item.client.email    %}  Email {{item.client.email }}   {% endif %}  </td>
+        <td>  </td>
+    </tr>
+    <!--  Клиент -->
+
+
+    <tr>
+        <td class="td2">Категория {{item.categ }} </td>
+        <td class="td4"> Площадь {{item.square }} кв.м. </td>
+        <td class="td3">  Округа: {{ okrug_str_titles }}</td>
+       <td class="td5"> Цена {{item.price }}
+      {% if item.rentsale == "rent"    %} руб./месяц  {% endif %}  {% if item.rentsale == "sale"    %} руб.  {% endif %}</td>
+       <td class="td6">(id{{item.pk }}) </td>
+    </tr>
+
+        <tr> <td colspan="5"> Комментарий: {{item.comment }} </td></tr>
+
+</table>
+
+    <strong>Критерий подбора объектов:  </strong>
+    <ul>
+    <li> объекты с ценой  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &le;   &nbsp; &nbsp; &nbsp;цены  в заявке</li>
+     <li> объекты с площадью  &nbsp; &nbsp; &nbsp; &nbsp; &ge;  &nbsp; &nbsp; &nbsp;площади в заявке</li>
+     <li> объекты по округам, указанным в заявке</li>
+          </ul>
+    <br/><br/>
+
+ <h3> {{ result }} </h3>
+
+      {%  for item in realties  %}
+            <!-- blog item  -->
+             {% include "realty/category_item.html" %}
+             <!-- blog item  -->
+
+      {%  endfor  %}
+
+</div>  <!--itempage-->
+
+
+
+
+
+
+
+
+
+{% endblock %}

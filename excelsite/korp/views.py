@@ -1,188 +1,128 @@
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.views import LoginView
 from django.shortcuts import render
-from django.http import HttpResponse, HttpRequest, HttpResponseNotFound,Http404
-from proc.go_ import *
-from korp.forms import  *
-from django.shortcuts import redirect
+from django.http import HttpResponse, HttpRequest, HttpResponseNotFound, Http404
+from proc.get_by_id import *
+from excelsite.settings import deploy
+from django.views.generic import ListView, DetailView, CreateView
+from korp.forms import *
 from django.views import View
-from django.views.generic  import ListView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
-
-menu=get_menu()
-
-
+from django.contrib.auth import login
+from django.urls import reverse_lazy
 
 
-def index(request:HttpRequest):
+def index(request: HttpRequest):
     return HttpResponse('Страница корпоративного сайта')
 
+#  --- представление типовой страницы  -------------------------------------------------------------------------------------------------
+def page (request: HttpRequest, pagetitle='неопр', menuitem=0) -> HttpResponse:
+    if ((menuitem == 1001) or (menuitem == 300)) :
+        page = get_page_by_id(1)
+    elif menuitem == 1002:
+        page = get_page_by_id(2)
+    else:
+        page = get_page_by_id(2)
 
-#-------------------------------------------------------------------------------------------------
-def company (request:HttpRequest):
-    title='О компании'
-    page = get_pages(1)
-    menuitem=1
-    content=page.content
-    context = {'menu': menu, 'title': title, 'content': content, 'page': page}
-    return render(request=request,template_name='korp/page.html', context=context )
+    if page.metatitle:
+        metatitle=page.metatitle
+    else:
+        metatitle=page.title
 
+    if  page.metadescription:
+        metadescription=page.metadescription
+    else:
+        metadescription = page.title
 
-
-#-------------------------------------------------------------------------------------------------
-class ListProjects(ListView):
-    '''показывает список курсов (проектов) '''
-    model=Kurs
-
-class ShowProject(DetailView):
-    '''показывает список курсов (проектов) '''
-    model=Kurs
-    context_object_name = "project"
-    template_name = 'korp/project.html'
-
-
-#-------------------------------------------------------------------------------------------------
-def events (request:HttpRequest):
-    '''показывает список событий '''
-    title='События'
-    menuitem =3
-    page = get_pages(3)
-    content = page.content
-    pages=Pages.objects.filter(cat_id=2)
-    context={'menu': menu, 'title': title, 'content': content, 'pages': pages, 'menuitem':menuitem}
-    return render(request=request,template_name='korp/events.html',context=context )
-
-#-------------------------------------------------------------------------------------------------
-def event (request:HttpRequest, post_id:int):
-    '''показывает страницу одного события '''
-    page = get_pages(post_id)
     title = page.title
-    context = {'menu': menu, 'title': title, 'page': page}
-    return render(request=request, template_name='korp/page.html', context=context)
+
+    content = page.content
+    context = {'metatitle': metatitle, 'metadescription': metadescription,  'title': title, 'content': content, 'page': page, 'menuitem': menuitem, 'deploy': deploy}
+    return render(request=request, template_name='page.html', context=context)
+
+
+#  --- представление списка объектов и страницы одного события -------------------------------------------------------------------------------------------------
+
+def items (request: HttpRequest,menu_id=0) -> HttpResponse:
+    ''' показывает список объектов '''
+    from proc.context_items_ import  context_items
+    context=context_items(menu_id)
+    return render(request=request, template_name='realty/category.html', context=context)
 
 
 
-#-------------------------------------------------------------------------------------------------
-def postevent (request:HttpRequest):
-    '''форма добавления события'''
-    title = 'Форма добавления курса (для зарегистрированного клиента)'
-    menuitem =4
+def Item (request, pk, categ):
+    ''' показывает страницу выбранного объекта '''
 
-    if request.method == "POST":
-        form = addPageForm(request.POST)
+    print('categ=', categ)
 
-        if form.is_valid():
-            print(form.cleaned_data)
-            try:
-                Pages.objects.create(**form.cleaned_data)
-                form.title
-                content = f'КУРС  ДОБАВЛЕН'
-                context = {'menu': menu, 'title': title, 'form': '', 'menuitem': menuitem, 'content': content}
-                return render(request=request, template_name='korp/form_appl.html', context=context)
+    if  True:
+        if categ == "ofis": item = Ofis.objects.get(pk=pk)
+        if categ == "torg" : item = Torg.objects.get(pk=pk)
+        if categ == "tc": item = Tc.objects.get(pk=pk)
+        if categ == "proizv": item = Proizv.objects.get(pk=pk)
+        if categ == "sklad": item = Sklad.objects.get(pk=pk)
+        if categ == "psn": item = Psn.objects.get(pk=pk)
+        if categ == "retail": item = Retail.objects.get(pk=pk)
+        if categ == "land": item = Land.objects.get(pk=pk)
+        if categ == "flat": item = Flat.objects.get(pk=pk)
 
-                #return redirect('home_ref')
-            except:
-                form.add_error(None, 'Ошибка добавления курса')
+        try:
+            itemfields= item.get_fields()
+        except Exception:
+            raise
+
+        exclude=['id', 'title', 'time_create',  'worker',  'owner',  'sale',  'price_sale',  'sale_type',  'sale_right',  'rent ',  'price_rent',
+                 'adres',  'map', 'square', 'photo', 'rent', 'rent_type', 'is_published',
+                 'photo1', 'photo2', 'photo3', 'photo4', 'photo5', 'photo6', 'photo7','photo8','photo9','photo10',
+                 'maplink',  'categ',  'idl',  'description',  'export_avito',  'export_yandex',  'export_afi',  'export_domclik',  'export_5',  'export_6',
+                 'metatitle',   'metadescription',   'okrug',   '',   '',   '',   '',   '',    ]
+
+        context={ "item": item,   "itemfields":itemfields, "exclude": exclude }
+        return render(request=request, template_name='realty/item.html', context=context)
     else:
-        form = addPageForm()
-        content= ''
-        context = {'menu': menu, 'title': title, 'form': form, 'menuitem': menuitem, 'content':content }
-        return render(request=request, template_name='korp/form_appl.html', context=context)
+        return HttpResponseNotFound('Страница ошибка')
 
-#------------------------------------------------------------------------------------------------
+#  ----------------------------------------------------------------------------------------------------
 
-def categs (request:HttpRequest,categ_id:int):
+
+def search (request: HttpRequest,menu_id=0) -> HttpResponse:
+    ''' показывает поиск объектов '''
+    #return render(request=request, template_name='category.html', context=context)
+    return HttpResponse('<h1 style="margin:20px auto; text-align:center">В СТАДИИ РАЗРАБОТКИ</h1>')
+
+
+class LoginUser (LoginView):
+    form_class = AuthenticationForm
+    template_name = 'login.html'
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title']='Логин пользователя'
+        return context
+
+'''
+def font(request: HttpRequest, pagetitle='неопр', menuitem=0) -> HttpResponse:
+    page = get_page_by_id(1)
+    content = page.content
+    context = {'title': pagetitle, 'content': content, 'page': page, 'menuitem': menuitem}
+    return render(request=request, template_name='page.html', context=context)
+ 
+class PostItem (LoginRequiredMixin, CreateView):
+    form_class = addPageForm
+    template_name = 'post_event.html'
+    success_url = reverse_lazy('home_ref')
+    login_url =  reverse_lazy('home_ref')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title']='Добавление страницы'
+        print("context====", context)
+        return context
+
+def categs(request: HttpRequest, categ_id: int):
     return HttpResponse(f'Выбрана категория с id=  {categ_id}')
-
-
-def testView (request:HttpRequest):
-    if request.method=='POST':
-        pass
-    elif request.method=='GET':
-        pass
-
-class classTestView (LoginRequiredMixin, View):
-    def post (request:HttpRequest):
-        pass
-
-    def get (request:HttpRequest):
-        pass
-
-
-
-
-
-def project (request:HttpRequest)-> HttpResponse:
-    title='Проект'
-    page = get_pages(6)
-    menuitem =6
-    content=page.content
-    context = {'menu': menu, 'title': title, 'content': content, 'menuitem':menuitem}
-    return render(request=request, template_name='korp/page.html', context=context)
-
-'''
-def contacts (request:HttpRequest)-> HttpResponse:
-    title='Контакты'
-    page = get_pages(1)
-    menuitem =1
-    content=page.content
-    context = {'menu': menu, 'title': title, 'content': content,'menuitem':menuitem}
-    return render(request=request, template_name='korp/page.html', context=context)
 '''
 
-def contacts (request:HttpRequest)-> HttpResponse:
-    title='Контакты'
-    page = get_pages(2)
-    menuitem=1
-    content=page.content
-    context = {'menu': menu, 'title': title, 'content': content, 'page': page}
-    return render(request=request,template_name='korp/page.html', context=context )
 
-
-
-
-
-
-def form (request:HttpRequest)-> HttpResponse:
-    '''форма заявки на курс'''
-    title = 'Форма заявки на курс'
-    menuitem =3
-    if request.method=="POST":
-        form=addApplForm(request.POST)
-        if form.is_valid():
-            print(form.cleaned_data)
-            try:
-                Application.objects.create(**form.cleaned_data)
-                return redirect('home')
-            except:
-                form.add_error(None,'Ошибка добавления клиента')
-    else:
-        form = addApplForm()
-
-    context = {'menu': menu, 'title': title, 'form':form, 'menuitem':menuitem}
-    return render(request=request, template_name='korp/form_appl.html', context=context)
-
-
-
-
-
-
-
-def login (request:HttpRequest):
-    menuitem =5
-    title = 'ЛОГИН КЛИЕНТА'
-    content = "ЛОГИН КЛИЕНТА"
-    context = {'menu': menu, 'title': title, 'content': content}
-    raise Http404()
-    return render(request=request, template_name='korp/page.html', context=context)
-
-    #return HttpResponse('Login')
-
-
-def valuta (request:HttpRequest):
-    return HttpResponse(f'Выбрана валюта')
-
-def pageNotFound (request:HttpRequest,exception):
+def pageNotFound(request: HttpRequest, exception):
     return HttpResponseNotFound('Страница ошибка')
-
-
-
-# Create your views here.

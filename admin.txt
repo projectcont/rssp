@@ -1,17 +1,30 @@
 cd F:\djangoproject\excelsite
 python manage.py runserver
 
-http://127.0.0.1:8000/admin/
-
-В файлк settings.py: LANGUAGE_CODE = 'ru'
-
 //добавление суперпользователя
 python manage.py createsuperuser
-логин root  
-пароль sBa2v2v3  
-email root@root.com  
+логин root   пароль sBa2v2v3  email root@root.com  
+
+#--------------------------------------------------------------------
+
+http://127.0.0.1:8000/userlux/
+логин root 
+пароль sBa2v2v3
+
+логин user2  пароль sBa2v2v32
+
+http://127.0.0.1:8000/accounts/login/
 
 
+про логин
+https://developer.mozilla.org/ru/docs/Learn/Server-side/Django/Authentication
+https://www.reg.ru/blog/shpargalka-po-python-dlya-django/
+https://django.fun/docs/django/4.2/topics/email/
+https://ninavasilok.ru/optimizaciya-raboty-s-izobrazeniyami-v-django-sovety-i-rekomendacii/
+https://sorl-thumbnail.readthedocs.io/en/latest/
+
+
+----------------------------------------------------------------------------
 
 //файл korp/admin.py
 class pageAdmin(admin.ModelAdmin):

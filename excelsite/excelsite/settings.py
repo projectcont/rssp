@@ -11,10 +11,13 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
 from pathlib import Path
+from os import path
+import socket
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
 
+
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -23,11 +26,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-^(as!#&4+0^ntwk0tm=idq6os+jfn)pniyy6^q#qdpxbnwy4uy'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+#DEBUG = True
+socketip= socket.gethostbyname(socket.gethostname())
+if socketip == '127.0.1.1':
+    deploy = 'cloud'
+    DEBUG = True
+else:
+    deploy = 'local'
+    DEBUG = True
 
-
-ALLOWED_HOSTS = ['127.0.0.1', '217.144.98.64:5000', '217.144.98.64']
-
+ALLOWED_HOSTS = ['95.183.13.132', 'localhost', '127.0.0.1','77.222.43.145' ]
 
 # Application definition
 
@@ -38,14 +46,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #'korp.apps.KorpConfig',
     'korp',
-    'tinymce',
+    'crm',
+    'rest_framework',
 ]
 
-TINYMCE_JS_URL = 'tiny_mce/tiny_mce.js'
-TINYMCE_JS_ROOT = 'tiny_mce'
-TINYMCE_DEFAULT_CONFIG = {'theme': "advanced", 'theme_advanced_toolbar_location' : "top", 'height': '400'}
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -55,14 +66,47 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    #'korp.middleware.LoggingVisit',
 ]
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'main_format': {
+            "format": "{asctime} - {levelname} - {module} - {filename}- {message} ",
+            "style": "{",
+        }
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "main_format",
+        },
+        "file": {
+            "class": "logging.FileHandler",
+            "formatter": "main_format",
+            "filename": "visits.log",
+        }
+
+    },
+    "loggers": {
+        "main": {
+            "handlers": ['file'],
+            "level": "INFO",
+            "propagate": "True",
+        }
+
+    },
+
+}
 
 ROOT_URLCONF = 'excelsite.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -77,14 +121,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'excelsite.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'gebocommru_3',
+        'USER': 'gebocommru_3',
+        'PASSWORD': 'wbe9n2hN3u',
+        'HOST': 'pg3.sweb.ru',
+        'PORT': '',
     }
 }
 
@@ -107,31 +153,42 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-#LANGUAGE_CODE = 'en-us'
+# LANGUAGE_CODE = 'en-us'
 LANGUAGE_CODE = 'ru'
 
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
-USE_TZ = True
-
+USE_TZ = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
+
+
+
 
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR,'static')  #to after collect
 STATICFILES_DIRS = []
 
-MEDIA_ROOT=os.path.join(BASE_DIR,'media')
-MEDIA_URL='/media/'
+
+#MEDIA_ROOT=os.path.join(BASE_DIR,'media')
+MEDIA_URL='/mediafiles/'
+
+BASE = path.dirname(path.dirname(path.dirname(path.abspath(__file__))))
+
+MEDIA_ROOT = BASE + '/media/'
+
+print("BASE=",BASE, "MEDIA_ROOT=", MEDIA_ROOT, "STATIC_ROOT=", STATIC_ROOT )
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_REDIRECT_URL = '/korp/userpage/'

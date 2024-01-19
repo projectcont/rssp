@@ -1,0 +1,48 @@
+div.blog { border:0px solid brown ;
+  width:100%; display: flex;
+  flex-direction: row;
+  height: auto;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content:space-between;
+  align-content: start;
+  margin:auto;
+ }
+
+div.blog_item {width:32%; border:0px solid brown ; }
+div.blog_item * {text-align:center; margin:auto}
+
+div.blog_img {width:100%;}
+div.blog_img div.img { width:340px; height:340px; overflow:hidden; border:0px solid yellow}
+div.blog_img div.img img {height:100%; overflow:hidden; border:0px solid green }
+
+div.blog_content{}
+
+
+
+#itempage div.flexcontainer{ border:0px solid brown ;
+  width:100%; display: flex; flex-direction: row;  height: auto;  align-items: center;  flex-wrap: wrap;  justify-content:space-between;  align-content: start;  margin:auto;
+ }
+
+#itempage #features {width:100%; border:0px solid green;  }
+#itempage #item_content {width:30%; border:0px solid green;  }
+#itempage #item_image {width:65%; border:0px solid green;  }
+#itempage #item_image img {width:100%;}
+#itempage #item_content *,#itempage #item_content {font-size:19px; line-height:26px}
+#itempage #photos td {width:50%; border:0px solid green;  overflow:hidden}
+#itempage #photos * {text-align:center; margin:auto}
+#itempage #photos td img { width:95%; }
+
+
+#itempage h3  {font-size:22px; line-height:26px; text-align:center; margin:20px auto}
+
+/*  form-client  */
+#itempage #form-client * {text-align:center;}
+#itempage #form-client { width:90%; padding:5px 0 20px 0; background-color:#a9dbfc; border:0px solid green }
+#itempage #form-client div { width:100%;  background-color:#a9dbfc; border:0px solid green }
+#itempage #form-client h3 {margin:30px auto auto 10px}
+#itempage #form-client input.submut {margin-top:20px}
+
+
+#itempage h1, #itempage h2  {text-align:left; margin:10px 0;; padding:0;  font-size:19px; line-height:23px; font-weight:800}
+#itempage div p  {text-align:left; font-size:17px; line-height:23px; }

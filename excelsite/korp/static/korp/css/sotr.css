@@ -1,0 +1,20 @@
+/* fotoform */
+form.fotoform {width:100%; margin:0; padding:20px 0; background-color:#6cf7b7; height:170px }
+div#content form.fotoform *, div#content form.fotoform p {text-align:center; }
+form.fotoform input {text-align:center; margin:auto;  font-size:17px; line-height:23px;}
+div#content form.fotoform  input.submitbutton { cursor:pointer;line-height:33px; background-color:#0ca91b; color:#ffffff; text-align:center; margin:20px auto; width:300px}
+form.fotoform table  { width:100%; margin-top:20px  }
+form.fotoform h4 {width:100%;font-size:23px; line-height:23px; margin:auto;}
+form.fotoform h5 {width:100%;font-size:15px; line-height:23px; margin:auto; font-weight:800}
+div.fotoformdiv div{width:46%;}
+
+/* zayavki */
+table.zayavki  {width:100%; border:0px solid green; margin:0px 0 40px 0 }
+table.zayavki tr  {width:100%;  background-color:#a9dbfc }
+table.zayavki td  {  padding:5px 0;  border:0px solid green; }
+table.zayavki tr td.td_categ {width:240px}
+table.zayavki tr td.td_okrug {width:auto}
+table.zayavki tr td.td_price {width:230px}
+table.zayavki tr td.td_square {width:230px; }
+table.zayavki tr td.td_pk {width:50px}
+table.zayavki *  {font-size:15px; line-height:17px;}

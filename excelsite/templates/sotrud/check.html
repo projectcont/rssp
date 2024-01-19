@@ -1,0 +1,26 @@
+{% extends 'sotrud/sotr.html'  %}
+{%  load static %}
+{%  load korp_tags %}
+
+{% block content %}
+
+<h1> Проверка заполнения объектов </h1>
+
+<div class="export_form_wrapper" >
+<form action=""  method="get" class="export_form" style="margin-bottom:90px">
+      {% csrf_token %}
+ <input type="hidden" name="check" value="on" >
+    <input style="background-color:#11559b; width:500px"
+           type="submit"  class="submitbutton"  value="ПРОВЕРИТЬ" >
+ </form>
+</div>
+
+
+
+{% autoescape off %}
+  {{ result }}
+{% endautoescape %}
+
+
+
+{% endblock %}

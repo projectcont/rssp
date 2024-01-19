@@ -1,0 +1,24 @@
+{% load korp_tags %}
+
+{% block menu %}
+
+   <div class="moduletablehormenu">
+
+
+       <a href="{%  url 'ref' 12  %}" {% if menuitem == 12 %} class="hl" {% endif  %}> Офисы </a>
+       <a href="{%  url 'ref' 13  %}" {% if menuitem == 13 %} class="hl" {% endif  %}> Торговая площадь</a>
+       <a href="{%  url 'ref' 14  %}" {% if menuitem == 14 %} class="hl" {% endif  %}> Здания </a>
+
+       <a href="{%  url 'ref' 16  %}" {% if menuitem == 16 %} class="hl" {% endif  %}> Производство</a>
+       <a href="{%  url 'ref' 17  %}" {% if menuitem == 17 %} class="hl" {% endif  %}>Склады </a>
+       <a href="{%  url 'ref' 18  %}" {% if menuitem == 18 %} class="hl" {% endif  %}> ПСМ</a>
+       <a href="{%  url 'ref' 19  %}" {% if menuitem == 19 %} class="hl" {% endif  %}> Ритейл</a>
+       <a href="{%  url 'ref' 20  %}" {% if menuitem == 20 %} class="hl" {% endif  %}> Земля</a>
+       <a href="{%  url 'ref' 21  %}" {% if menuitem == 21 %} class="hl" {% endif  %}> Квартиры (новостройка)</a>
+
+
+
+
+
+        </div>
+{% endblock %}

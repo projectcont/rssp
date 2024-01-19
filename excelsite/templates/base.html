@@ -1,0 +1,155 @@
+{% load static %}
+
+
+<!doctype html>
+<html class="no-js" xmlns="http://www.w3.org/1999/xhtml" lang="ru" dir="ltr" prefix="og: http://ogp.me/ns#" > <!--<![endif]-->
+<head>
+
+<meta name="title" content= "{{ metatitle }}" />
+<meta name="description" content= " {{ metadescription }}"  />
+    <title>  {{ title }} </title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+     <link rel="stylesheet"  href="{%  static 'korp/css/user.css' %} "  />
+    <link rel="stylesheet"  href="{%  static 'korp/css/shop.css' %} "  />
+
+
+
+ <link href='https://fonts.googleapis.com/css?family=PT+Sans:400,700&amp;subset=latin,cyrillic-ext' rel='stylesheet' type='text/css'>
+ <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500&display=swap" rel="stylesheet">
+
+</head>
+
+<body >
+
+
+
+<!--   top   -->
+<div class="wrapper" id="top" >
+       <div class="center"  >
+	   {% include "includes/_top.html" %}
+        </div>    <!--  center    -->
+   </div>         <!--   wrapper   -->
+<!--   top   -->
+
+
+<!--   menu   -->
+  <div class="wrapper menu" id="menu"    >
+       <div class="center" >
+                <h3>АРЕНДА</h3>
+           {% include "includes/_menu_rent.html" %}
+           <h3>ПРОДАЖА</h3>
+           {% include "includes/_menu_sale.html" %}
+
+        </div>    <!--  center    -->
+   </div>         <!--   wrapper   -->
+<!--   menu   -->
+
+
+
+
+
+
+
+<!--  particle    -->
+{% if page.pk == 1 %}
+    {% include "includes/_particle.html" %}
+{% endif %}
+<!--   particle   -->
+
+
+<!--   popular   -->
+{% if page.pk == 1 %}
+  <div class="wrapper slider2"  >
+       <div class="center" >
+	 {% include "includes/_popular.html" %}
+        </div>    <!--  center    -->
+   </div>         <!--   wrapper   -->
+{% endif %}
+<!--   popular   -->
+
+
+
+<!--   preim  -->
+{% if page.pk == 1 %}
+  <div class="wrapper slider"  >
+       <div class="center" >
+	 {% include "includes/_preim.html" %}
+        </div>    <!--  center    -->
+   </div>         <!--   wrapper   -->
+{% endif %}
+<!--   preim   -->
+
+
+
+
+
+
+
+{% if menuitem == 1002 %}
+<div class="wrapper" style="background-color:#07356c "  >
+ <div class="center usermenu" id="usermenu">
+        <a href="{%  url 'request_ref'  %}"   >Заявки (подбор объектов)</a>
+       <a href="{%  url 'formatfotos_ref'  %}">Форматирование фото</a>
+      <a href=""> Выйти  </a>
+ </div>
+</div>
+{% endif %}
+
+
+
+<!--   content   -->
+  <div class="wrapper" >
+       <div class="center" id="content" >
+        <h1>   {{ title }} {{ doptitle }} </h1>
+	    {% block content %}   {% endblock %}
+        </div>    <!--  center    -->
+   </div>         <!--   wrapper   -->
+<!--   content   -->
+
+
+
+<!--   polosa   -->
+  <div class="wrapper under" >
+       <div class="center" >
+	 {% include "includes/_polosa.html" %}
+        </div>    <!--  center    -->
+   </div>         <!--   wrapper   -->
+<!--   polosa   -->
+
+ {% include "includes/_floatlabel.html" %}
+
+
+<style>
+div#top {background-image:url('{%  static 'korp/images/fon.jpg' %}'); }
+div.under {background-image:url('{%  static 'korp/images/fon2.jpg' %}'); }
+</style>
+
+
+
+
+<!--
+<a href="/accounts/login/"> Логин </a>
+<a href="/korp/userpage/"> Тест2 </a>
+-->
+
+
+<!-- шрифты -->
+{% if menuitem == 300 %}
+<a href="/crm/req/"> Заявки </a>
+<p>menu={{ menuitem }} pk={{ page.pk }}  </p>
+<p>deploy={{ deploy }}   </p>
+
+
+        <style>
+        #menu  h3 {font-size:16px; line-height:20px; margin:15px auto 5px auto; }
+        div.moduletablehormenu   a, div.moduletablehormenu span {  font-size:15px;  padding:0 7px; font-weight:400;   }
+div#content p , div#content ul li {   font-size:17px; line-height:20px;   }    /*   page    */
+div#content  p  {margin:5px auto}
+#preim div.preim h4 {   font-size: 19px;   line-height: 26px; }
+#effect {height:300px}
+        </style>
+{% endif %}
+<!-- шрифты -->
+
+</body>
+</html>

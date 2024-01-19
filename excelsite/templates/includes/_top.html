@@ -1,0 +1,53 @@
+{%  load static %}
+
+{% block top %}
+<div id="top1">
+<a href="{%  url 'home_ref' %}"   title="ГЕБО КОММЕРЦ Агентство недвижимости"  >
+    <img src=" {%  static 'korp/images/emblema2.png' %}  " alt="ГЕБО КОММЕРЦ Агентство недвижимости" title="ГЕБО КОММЕРЦ Агентство недвижимости"   />
+</a>
+</div>
+
+<div id="top2">
+<p>Ваш правильный выбор &nbsp;&nbsp;&nbsp;&#128379;&nbsp;8&nbsp;(495)&nbsp;222-22-22</p>
+<strong>ГЕБО КОММЕРЦ Агентство недвижимости </strong>
+</div>
+
+
+<div id="top3">
+
+<div class="flexcontainer">
+   <table>
+  <tr>
+    <td>
+        <a   href="https://t.me/gebo2003" title="telegram"  >
+        <img src=" {%  static 'korp/images/telegram2.png' %}  " alt="telegram" title="telegram"   />
+        </a>
+    </td>
+      <td>наш телеграм-канал о рынке недвижимости</td>
+  </tr>
+
+     <tr>
+    <td>   <a  href="https://wa.me/7"   title="whatsapp"  >
+             <img src=" {%  static 'korp/images/whatsapp.png' %}  " alt="whatsapp" title="whatsapp"   />
+    </a>
+    </td>
+      <td> Whatsapp с нашим сотрутником </td>
+  </tr>
+</table>
+</div>
+
+
+
+
+
+    <div class="topmenu">
+      {% comment %}
+        <a href="{%  url 'search_ref'   %}  ">Поиск</a>
+         {% endcomment %}
+
+        <a href="/korp/font/"> Тест шрифта   </a>
+    </div>
+
+
+</div>
+{% endblock %}

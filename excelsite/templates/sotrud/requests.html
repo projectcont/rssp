@@ -1,0 +1,60 @@
+{% extends 'sotrud/sotr.html'  %}
+{%  load static %}
+{%  load korp_tags %}
+
+
+{% block content %}
+
+<div id="zayavki">
+
+    <h1> ЗАЯВКИ</h1>
+    <p> Вы на этой странице, так как вы вошли как сотрудник  «ГЕБО КОММЕРЦ»  </p>
+
+    {%  for item in items  %}
+<table class="zayavki"  >
+
+<!--  Клиент -->
+    <tr style="background-color:#569ccb">
+        <td>  Клиент {{item.client.name }} </td>
+        <td> {% if item.client.phone    %}  Телефон {{item.client.phone }}   {% endif %}  </td>
+       <td> {% if item.client.whatsapp    %}  Whatsapp {{item.client.whatsapp }}   {% endif %}  </td>
+        <td> {% if item.client.email    %}  Email {{item.client.email }}   {% endif %}  </td>
+        <td>  </td>
+    </tr>
+    <!--  Клиент -->
+
+
+
+  <tr>
+     <td class="td_categ">Категория {{item.categ }} / {{item.rentsale }}</td>
+
+      <td class="td_okrug"> Округ: {{item.get_okruga }}   </td>
+
+
+      <td class="td_square"> Площадь {{item.square }} кв.м. </td>
+
+      <td class="td_price"> Цена {{item.price | space_format }}
+      {% if item.rentsale == "rent"    %} руб./месяц  {% endif %}  {% if item.rentsale == "sale"    %} руб.  {% endif %}</td>
+
+      <td class="td_pk">(id{{item.pk}}) </td>
+
+  </tr>
+
+
+
+    <tr>  <td> <a href="/crm/req/{{item.pk}}">Подобрать объекты</a> </td>   <td colspan="4"> Комментарий: <strong>{{item.comment }}</strong> </td>     </tr>
+
+
+
+
+</table>
+
+                  <div >           </div>
+
+
+{%  endfor  %}
+
+
+    </div> <!-- zayavki  -->
+
+{% endblock %}

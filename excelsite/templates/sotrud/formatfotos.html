@@ -1,0 +1,84 @@
+{% extends 'sotrud/sotr.html'  %}
+{%  load static %}
+
+
+
+{% block content %}
+
+<h2> Форматирование всех  фотографий</h2>
+
+
+<div class="flexcontainer fotoformdiv" >
+
+<div>
+<form action=""  method="get" class="fotoform">
+      {% csrf_token %}
+    <h4>Привести к ширине 750 px</h4>
+    <h5>При этом итоговая высота картинок может быть разная</h5>
+<table>
+    <tbody>
+    <tr>
+      <td>итоговая ширина <input type="text" name="fotoformat1" value="750" style= "width:50px"> px</td>
+    </tr>
+    <tr>
+      <td> <input type="submit" class="submitbutton" value="ПРИМЕНИТЬ"  ></td>
+    </tr>
+  </tbody>
+</table>
+ </form>
+     </div>
+
+<!-- -->
+<div>
+<form action=""  method="get" class="fotoform">
+      {% csrf_token %}
+     <h4>Привести к ширине 530 px, высоте 330 px </h4>
+    <h5>При этом итоговая картинка может быть обрезана </h5>
+  <table>
+    <tbody>
+    <tr>
+      <td> итоговая ширина  </td>
+      <td> итоговая высота  </td>
+    </tr>
+    <tr>
+      <td> <input type="text" name="fotoformat2" value="530" style= "width:50px"> px </td>
+        <td> <input type="text" name="fotoformat3" value="330" style= "width:50px"> px </td>
+    </tr>
+    <tr>
+      <td colspan="2"> <input type="submit"  class="submitbutton"  value="ПРИМЕНИТЬ" > </td>
+    </tr>
+  </tbody>
+</table>
+ </form>
+ </div>
+
+    </div> <!-- flexcontainer -->
+
+ <h2> {{ result }} </h2>
+
+{% autoescape off %}
+ {{ photos_number }}
+{% endautoescape %}
+
+
+<br/> <br/>
+<form action=""  method="get" >
+    {% csrf_token %}
+    <input type="hidden" id="from_orig" name="from_orig" value="0" />
+<input type="submit"  class="submitbutton"  value=" ВОССТАНОВИТЬ ОРИГИНАЛЬНЫЕ" >
+</form>
+
+<br/> <br/>
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+

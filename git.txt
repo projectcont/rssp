@@ -1,10 +1,10 @@
-REM https://github.com/projectcont/rssp/
+REM https://github.com/projectcont/commers.git
 
 REM F:
-REM cd F:\djangoproject\ 
+REM cd F:\realtyproject\ 
 REM git init
 REM git branch -m main
-REM git remote add origin https://github.com/projectcont/rssp.git
+REM git remote add origin https://github.com/projectcont/commers.git
 
 REM git add -A
 REM git status

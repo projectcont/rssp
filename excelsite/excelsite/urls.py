@@ -16,46 +16,22 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from korp.views import index
-from  django.conf.urls.static import static
+from django.conf.urls.static import static
 from excelsite import settings
-from korp.views import *
 
+from django.views.static import serve
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('/', include('korp.urls')),
+    path('userlux/', admin.site.urls),
     path('korp/', include('korp.urls')),
+    path('crm/', include('crm.urls')),
 
 ]
 
-
-'''
-
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', company),
-    path('home/', company, name='home_ref'),
-    path('contacts/', contacts, name='contacts_ref'),
-    path('form/', form, name='form_ref'),
-    path('login/', login, name='login_ref'),
-    path('kurses/', kurses, name='kurses_ref'),
-    path('postkurs/', postkurs, name='postkurs_ref'),
-    path('project/', project, name='projects_ref'),
-    path('proj/<int:post_id>/', kurs, name="proj_ref"),
-    path('category/<int:categ_id>/', categs, name="category_ref"),
-
+urlpatterns += [
+    path('accounts/', include('django.contrib.auth.urls')),
 ]
-'''
 
-urlpatterns.extend(  static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)   )
-
-
-#urlpatterns+=static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-
-'''
-if settings.DEBUG:
-    urlpatterns+=static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-'''
-
-urlpatterns+=static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
+urlpatterns.extend(static(settings.STATIC_URL, document_root=settings.STATIC_ROOT))
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

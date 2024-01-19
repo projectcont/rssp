@@ -1,0 +1,30 @@
+{% extends 'base.html'  %}
+{%  load static %}
+
+
+{% block content %}
+
+<form action="{% url 'postevent_ref' %}" method="post"  enctype="multipart/form-data">
+                {% csrf_token %}
+                 <div class="form-error"  > {{ form.non_field_errors  }}  </div>
+
+                {% for f in form %}
+               {% comment %}  {{ f.name }} {% endcomment %}
+                    <div class="form-wrap">
+                        <div class="label {% if f.name == 'conf' %}labelconf{% endif %}">
+                            <label class="form-label" for="{{ f.id_for_label }}"> {{ f.label }}</label>
+                        </div>
+                         <div class="input {% if f.name == 'conf' %}checkconf{% endif %}">
+                            {{ f }}
+                         </div>
+                    </div>
+                <div class="form-error"  > {{ f.error  }}  </div>
+            {% endfor %}
+
+    <div class="divsubmut"> <input type="submit" value="Отправить" class="submut" /> </div>
+            </form>
+
+
+
+
+{% endblock %}

@@ -1,0 +1,41 @@
+{%  load static %}
+{% load korp_tags %}
+
+
+
+    <div class="blog_item">
+            <div class="blog_img">
+                {% if item.photo %}
+                <a href="{{item.get_absolute_url}}"  class="blog_podr">
+                <div class="img">
+                         <img src="{{item.photo.url}}" class="blogphoto">
+                    </div>
+                </a>
+                {% endif %}
+            </div> <!-- blog_img  -->
+
+
+             <div class="blog_content">
+                 <a href="{{item.get_absolute_url}}"  class="blog_title"><h3>{{item.title}}</h3></a>
+                 <div >
+
+
+{% if rentsale == 'rent' %}  {{ item.price_rent | space_format }}   {% endif %}
+{% if rentsale == 'sale' %}  {{ item.price_sale | space_format }}   {% endif %}
+
+                     {{ pricetype }}
+
+
+                 </div>
+                 <div >{{item.square | space_format }} м<sup>2</sup> </div>
+                 <div >{{item.adres |  truncatewords:400 }}</div>
+                    <a href="{{item.get_absolute_url}}"  class="blog_podr">
+                        Подробнее...
+                    </a>
+
+             </div> <!-- blog_content  -->
+
+
+         {{ item.categ }}
+
+    </div> <!-- blog item  -->

@@ -1,0 +1,53 @@
+{% load static %}
+{%  load korp_tags %}
+
+<!doctype html>
+<html class="no-js" xmlns="http://www.w3.org/1999/xhtml" lang="ru" dir="ltr" prefix="og: http://ogp.me/ns#" > <!--<![endif]-->
+<head>
+
+<meta name="title" content= "{{ metatitle }}" />
+<meta name="description" content= " {{ metadescription }}"  />
+    <title>  {{ title }} </title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+     <link rel="stylesheet"  href="{%  static 'korp/css/user.css' %} "  />
+    <link rel="stylesheet"  href="{%  static 'korp/css/shop.css' %} "  />
+     <link rel="stylesheet"  href="{%  static 'korp/css/sotr.css' %} "  />
+
+</head>
+<body >
+
+{% if not sotr %}
+{% endif %}
+
+
+
+<div class="wrapper" style="background-color:#07356c "  >
+ <div class="center usermenu" id="usermenu">
+        <a href="{%  url 'request_ref'  %}"    {% if menuitem == 1002 %} class="hl" {% endif  %} >Заявки (подбор объектов)</a>
+        <a href="{%  url 'formatfotos_ref'  %}" {% if menuitem == 1003 %} class="hl" {% endif  %}>Формат фото</a>
+        <a href="{%  url 'check_ref'  %}" {% if menuitem == 1005 %} class="hl" {% endif  %}>Проверка</a>
+
+        <a href="{%  url 'avito_ref'  %}"        {% if menuitem == 1004 %} class="hl" {% endif  %}>Avito</a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="/korp" > Сайт  </a>
+     <a href="/userlux/"> Управление  </a>
+     <a href=""> Выйти  </a>
+ </div>
+</div>
+
+
+<!--   content   -->
+  <div class="wrapper" >
+       <div class="center" id="content" >
+        <h1>   {{ title }} {{ doptitle }} </h1>
+	    {% block content %}   {% endblock %}
+        </div>    <!--  center    -->
+   </div>         <!--   wrapper   -->
+<!--   content   -->
+
+<style>
+div.blog_item  h3, #itempage div.blog_item h3, #itempage a.blog_podr {font-size:15px; line-height:17px; font-weight:400}
+</style>
+
+</body>
+</html>

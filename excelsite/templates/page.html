@@ -1,0 +1,27 @@
+{% extends 'base.html'  %}
+{%  load static %}
+
+
+{% block content %}
+
+{% if page.photo %}
+  <img src="{{page.photo.url}}" class="eventphoto">
+{% endif %}
+
+{% autoescape off %}
+    {{ page.content }}
+{% endautoescape %}
+
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+

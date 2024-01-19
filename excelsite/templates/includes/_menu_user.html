@@ -1,0 +1,11 @@
+{% load korp_tags %}
+
+{% block menu %}
+
+
+   <div class="usermenu">
+        <a href="{%  url 'login_ref'   %}  ">Логин</a>
+         <a href="/crm/req/" >Заявки</a>
+        {% comment %} <a href="{%  url 'postevent_ref'  %}">Добавить событие</a> {% endcomment %}
+        </div>
+{% endblock %}
