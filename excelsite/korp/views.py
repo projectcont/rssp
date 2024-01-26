@@ -47,7 +47,17 @@ def items (request: HttpRequest,menu_id=0) -> HttpResponse:
     ''' показывает список объектов '''
     from proc.context_items_ import  context_items
     context=context_items(menu_id)
-    return render(request=request, template_name='realty/category.html', context=context)
+    if request.user.is_authenticated:
+        print('logged', request.user.first_name)
+        #return render(request=request, template_name='sotrud/categ.html', context=context)
+        return render(request=request, template_name='realty/category.html', context=context)
+
+    else:
+        print('NOT')
+        return render(request=request, template_name='realty/category.html', context=context)
+
+
+
 
 
 

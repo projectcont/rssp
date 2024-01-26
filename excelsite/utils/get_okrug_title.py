@@ -12,5 +12,6 @@ def go(item)->str:
     if n == '10': result='Зеленоградский';
     if n == '11': result='Троицкий';
     if n == '12': result='Новомосковский';
+    if n == '13': result = 'неприменимо';
     if n=='100': result='Все округа';
     return result

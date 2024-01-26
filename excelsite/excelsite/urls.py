@@ -18,11 +18,13 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from excelsite import settings
+from korp import views as  korpviews
 
 from django.views.static import serve
 
 urlpatterns = [
-    path('/', include('korp.urls')),
+    #path('/', include('korp.urls')),
+    path('', korpviews.page,  kwargs={"pagetitle": "О компании", "menuitem": 1001, }),
     path('userlux/', admin.site.urls),
     path('korp/', include('korp.urls')),
     path('crm/', include('crm.urls')),

@@ -10,12 +10,42 @@
     <h1> ЗАЯВКИ</h1>
     <p> Вы на этой странице, так как вы вошли как сотрудник  «ГЕБО КОММЕРЦ»  </p>
 
+<!--  filter form  -->
+{% if show_filter == 1 %}
+      {% include "sotrud/filter_zav.html" %}
+{% endif %}
+<!--  filter form  -->
+
+<!--  realty prop  -->
+{% if show_realty == 1 %}
+<table style="width:100%" class="realty_prop">
+  <tr>
+    <td style="width:70%; padding-right:50px">
+        <p>По объекту:(id{{realtyitem.id}})  ( {{realtyitem.get_categ_title}} )     Адрес: {{realtyitem.adres}} </p>
+         <p> Заголовок: {{realtyitem.title}}  </p>
+    </td>
+      <td style="width:30%">
+        <p class="owner">
+                    {% autoescape off %}
+                       {{ realtyitem.get_owner }}
+                    {% endautoescape %}
+       </p>
+    </td>
+  </tr>
+</table>
+
+{% endif %}
+<!--  realty prop  -->
+
+
+
+
     {%  for item in items  %}
 <table class="zayavki"  >
 
 <!--  Клиент -->
     <tr style="background-color:#569ccb">
-        <td>  Клиент {{item.client.name }} </td>
+        <td style="padding-left:10px">  Клиент {{item.client.name }} </td>
         <td> {% if item.client.phone    %}  Телефон {{item.client.phone }}   {% endif %}  </td>
        <td> {% if item.client.whatsapp    %}  Whatsapp {{item.client.whatsapp }}   {% endif %}  </td>
         <td> {% if item.client.email    %}  Email {{item.client.email }}   {% endif %}  </td>
@@ -26,7 +56,11 @@
 
 
   <tr>
-     <td class="td_categ">Категория {{item.categ }} / {{item.rentsale }}</td>
+     <td class="td_categ"> {{item.get_categ_title }}
+       {% autoescape off %}
+         {{item.get_rentsale }}
+         {% endautoescape %}
+     </td>
 
       <td class="td_okrug"> Округ: {{item.get_okruga }}   </td>
 
@@ -40,14 +74,12 @@
 
   </tr>
 
-
-
-    <tr>  <td> <a href="/crm/req/{{item.pk}}">Подобрать объекты</a> </td>   <td colspan="4"> Комментарий: <strong>{{item.comment }}</strong> </td>     </tr>
-
-
+    <tr>  <td style="padding-left:10px" > <a href="/crm/req/{{item.pk}}" {% if item.get_scan == 1    %} class="selecthl"  {% else %}  class="select" {% endif %} >Подбор объектов</a> </td>   <td colspan="4"> Комментарий: <strong>{{item.comment }}</strong> </td>     </tr>
 
 
 </table>
+
+
 
                   <div >           </div>
 

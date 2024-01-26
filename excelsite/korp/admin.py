@@ -19,7 +19,9 @@ class OwnerAdmin(admin.ModelAdmin):
 
 
 class RealtyCommerceAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'price_sale', 'price_rent',  'is_published', 'adres', 'sale', 'rent')
+    #list_display = ('id', 'title', 'price_sale', 'price_rent',  'is_published', 'adres', 'sale', 'rent')
+    list_display = ('id','worker', 'title', 'scan',   'is_published', 'adres', 'sale', 'rent')
+
     list_display_links = ('id', 'title')
     search_fields = ('title', 'description')
     list_editable = ('is_published',)

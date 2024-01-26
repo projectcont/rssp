@@ -4,6 +4,7 @@ from django.db import models
 from django.contrib.auth.models import User
 import utils.get_okrug_title
 from datetime import datetime
+import utils.get_categ_title_from_short
 
 # -------------------------------------------------------------------------------------
 
@@ -89,7 +90,7 @@ class Owner  (models.Model):
 
 class Realty (models.Model):
     title=models.CharField(max_length=255, verbose_name='Название',blank=False,)
-    adres = models.CharField(max_length=255, verbose_name='Адрес (с городом)',blank=False,)
+    adres = models.CharField(max_length=255, verbose_name='Адрес',blank=False, help_text = "(с городом)")
     map = models.TextField(blank=False, verbose_name='Код с яндекс карты')
     square=models.DecimalField(max_digits=10, decimal_places=2, blank=False,verbose_name='Площадь кв.м.')
     photo=models.ImageField(upload_to="photos/osn", null=False, blank=True, verbose_name='Фото (основное)')
@@ -118,7 +119,7 @@ class Realty (models.Model):
     rent_type_select = ( ('1', 'Прямая'), ('2', 'Субаренда'),)
     rent_type = models.CharField(max_length=100, choices=rent_type_select, blank=True, null=True, verbose_name='Тип аренды', )
 
-    OKRUG_SELECT = ( ('13', 'не применимо'),  ('1', 'Центральный'), ('2', 'Северный'), ('3', 'Северо-Восточный'), ('4', 'Восточный'), ('5', 'Юго-Восточный'), ('6', 'Южный'), ('7', 'Юго-Западный'), ('8', 'Западный'), ('9', 'Северо-Западный'),  ('10', 'Зеленоградский'), ('11', 'Троицкий'),  ('12', 'Новомосковский'),)
+    OKRUG_SELECT = ( ('13', 'не применимо (вне Москвы)'),  ('1', 'Центральный'), ('2', 'Северный'), ('3', 'Северо-Восточный'), ('4', 'Восточный'), ('5', 'Юго-Восточный'), ('6', 'Южный'), ('7', 'Юго-Западный'), ('8', 'Западный'), ('9', 'Северо-Западный'),  ('10', 'Зеленоградский'), ('11', 'Троицкий'),  ('12', 'Новомосковский'),)
     okrug = models.CharField(max_length=100, choices=OKRUG_SELECT, blank=False, null=True, verbose_name='Округ', )
 
     #--- not nessesary-----
@@ -146,6 +147,25 @@ class Realty (models.Model):
         return result
     '''
 
+    def get_categ_title(self):
+        result = utils.get_categ_title_from_short.go(self)
+        return result
+
+
+    def get_owner (self):
+        result = 'Владелец: ' + "<br/>" + str(self.owner.name)+"<br/>"
+        if self.owner.phone:     result += "Телефон "  + str(self.owner.phone) +"<br/>"
+        if self.owner.whatsapp : result += "whatsapp "+ str(self.owner.whatsapp )+"<br/>"
+        if self.owner.telegram: result += "telegram: " + str(self.owner.telegram)+"<br/>"
+        if self.owner.phone1:     result += "доп.телефон " + str(self.owner.phone1)+"<br/>"
+        if self.owner.phone2:     result += "доп.телефон " + str(self.owner.phone2)+"<br/>"
+        if self.owner.phone3:     result += "доп.телефон " + str(self.owner.phone3)+"<br/>"
+        if self.owner.phone4:     result += "доп.телефон " + str(self.owner.phone4)+"<br/>"
+        if self.owner.phone5:     result += "доп.телефон " + str(self.owner.phone5)+"<br/>"
+
+        return result
+
+
     idl = models.CharField(max_length=255, null=True, blank=True, default='2222', verbose_name='уникальный ID')
 
     description = models.TextField(blank=False, null=True, verbose_name='Описание')
@@ -158,7 +178,7 @@ class Realty (models.Model):
     export_6 = models.BooleanField(default=False,verbose_name='экспорт6')
 
     floor_select_ = [('Не применимо', 'Не применимо'), ('Подвальный', 'Подвальный'), ('Цокольный', 'Цокольный'), ]
-    floor_select2 = [(i, i) for i in range(1, 99)]
+    floor_select2 = [ (str(i),  str(i) ) for i in range(1, 99)]
     floor_select_.extend(floor_select2)
     floor_select = tuple(floor_select_)
     floor = models.CharField(max_length=100, choices=floor_select, blank=False, null=True, verbose_name='Этаж', )
@@ -167,6 +187,8 @@ class Realty (models.Model):
 
     metatitle = models.CharField(max_length=255, null=True, blank=True, verbose_name='meta title')
     metadescription = models.TextField(null=True, blank=True, verbose_name='meta description')
+
+    scan = models.TextField(blank=True, null=True, verbose_name='Скан заявок')
 
     def get_fields(self):
         result= [  [field.name, field.verbose_name, field.value_from_object(self)] for field in self.__class__._meta.fields]
@@ -189,6 +211,10 @@ class Realty (models.Model):
 
     def get_okrug_title(self):
         result = utils.get_okrug_title.go(self)
+        return  result
+
+    def get_okrug_number(self):
+        result = int(self.okrug)
         return  result
 
     def __str__(self):

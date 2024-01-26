@@ -35,7 +35,7 @@ else:
     deploy = 'local'
     DEBUG = True
 
-ALLOWED_HOSTS = ['95.183.13.132', 'localhost', '127.0.0.1','77.222.43.145' ]
+ALLOWED_HOSTS = ['95.183.13.132', 'localhost', '127.0.0.1','77.222.43.145','http://gebo-commers.ru', 'https://gebo-commers.ru', 'gebo-commers.ru', ]
 
 # Application definition
 

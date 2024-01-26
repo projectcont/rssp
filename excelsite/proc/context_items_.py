@@ -65,56 +65,56 @@ def context_items (menu_id):
     #------------  sale   --------------------------------------------------------------
 
     if menu_id == 12 :
-        items = Ofis.objects.filter(is_published=True, rent=True)
+        items = Ofis.objects.filter(is_published=True, sale=True)
         metatitle=' ОФИСЫ, продажа '
         metadescription = ' ОФИСЫ, продажа '
         title =' ОФИСЫ (продажа)'
 
     if menu_id == 13 :
-        items = Torg.objects.filter(is_published=True, rent=True)
+        items = Torg.objects.filter(is_published=True, sale=True)
         metatitle=' ТОРГОВАЯ ПЛОЩАДЬ, продажа '
         metadescription = ' ТОРГОВАЯ ПЛОЩАДЬ, продажа '
         title ='  ТОРГОВАЯ ПЛОЩАДЬ (продажа)'
 
     if menu_id == 14:
-        items = Tc.objects.filter(is_published=True, rent=True)
+        items = Tc.objects.filter(is_published=True, sale=True)
         metatitle=' Здания, продажа '
         metadescription = ' ТОРГОВЫЕ ЦЕНТРЫ, продажа '
         title ='  Здания (продажа)'
 
 
     if menu_id == 16:
-        items = Proizv.objects.filter(is_published=True, rent=True)
+        items = Proizv.objects.filter(is_published=True, sale=True)
         metatitle=' ПРОИЗВОДСТВО, продажа '
         metadescription = ' ПРОИЗВОДСТВО, продажа '
         title ='  ПРОИЗВОДСТВО (продажа)'
 
     if menu_id == 17:
-        items = Sklad.objects.filter(is_published=True, rent=True)
+        items = Sklad.objects.filter(is_published=True, sale=True)
         metatitle=' СКЛАДЫ, продажа '
         metadescription = ' СКЛАДЫ, продажа '
         title =' СКЛАДЫ (продажа)'
 
     if menu_id ==  18:
-        items = Psn.objects.filter(is_published=True, rent=True)
+        items = Psn.objects.filter(is_published=True, sale=True)
         metatitle=' ПСН, продажа '
         metadescription = ' ПСН, продажа '
         title ='  ПСН (продажа)'
 
     if menu_id == 19 :
-        items = Retail.objects.filter(is_published=True, rent=True)
+        items = Retail.objects.filter(is_published=True, sale=True)
         metatitle=' РИТЕЙЛ, продажа '
         metadescription = ' РИТЕЙЛ, продажа '
         title ='  РИТЕЙЛ (продажа)'
 
     if menu_id == 20:
-        items = Land.objects.filter(is_published=True, rent=True)
+        items = Land.objects.filter(is_published=True, sale=True)
         metatitle=' ЗЕМЛЯ, продажа '
         metadescription = ' ЗЕМЛЯ, продажа '
         title =' ЗЕМЛЯ (продажа)'
 
     if menu_id == 21:
-        items = Flat.objects.filter(is_published=True, rent=True)
+        items = Flat.objects.filter(is_published=True, sale=True)
         metatitle=' КВАРТИРЫ (НОВОСТРОЙКА), продажа '
         metadescription = ' КВАРТИРЫ (НОВОСТРОЙКА), продажа '
         title ='  КВАРТИРЫ НОВОСТРОЙКА (продажа)'

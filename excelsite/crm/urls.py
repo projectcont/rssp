@@ -8,16 +8,15 @@ urlpatterns = [
     #path('requests/<int:pk>/', requests, name="requests_ref"),
 
 
-
-
     path('req/', requests, name="request_ref", kwargs={"menuitem": 1002, }),
     path('req/<int:id>', itemreq, kwargs={"menuitem": 1002, } ),
+    path('allrealty/', allrealty, name="allrealty_ref", kwargs={"menuitem": 1007, }),
 
     path('formatfotos/', formatfotos, name="formatfotos_ref", kwargs={"menuitem": 1003,  }),
 
-    path('check/', check, name="check_ref", kwargs={"menuitem": 1005, }),
 
-    path('avito/', avito, name="avito_ref", kwargs={"menuitem": 1004, }),
+    path('scan/', scan, name="scan_ref", kwargs={"menuitem": 1006, }),
+    path('showzavs/<int:realty_id>/<str:realty_categ>', showzavs, name="showzavs_ref", kwargs={"menuitem": 1008, }),
 
 ]
 

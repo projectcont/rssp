@@ -3,7 +3,8 @@
 {%  load korp_tags %}
 
 {% block content %}
-<div id="itempage">
+<div id="sotr_itempage">
+
 <h1> ЗАЯВКА (id{{item.pk }}). ПОДБОР ОБЪЕКТОВ</h1>
 
     <table class="zayavki" style="margin:0px 0 20px 0"  >
@@ -20,39 +21,60 @@
 
 
     <tr>
-        <td class="td2">Категория {{item.categ }} </td>
-        <td class="td4"> Площадь {{item.square }} кв.м. </td>
+        <td class="td2">Категория
+
+        {{item.get_categ_title }}
+       {% autoescape off %}
+         {{item.get_rentsale }}
+         {% endautoescape %}
+
+
+        </td>
+
         <td class="td3">  Округа: {{ okrug_str_titles }}</td>
+         <td class="td4"> Площадь {{item.square }} кв.м. </td>
        <td class="td5"> Цена {{item.price }}
       {% if item.rentsale == "rent"    %} руб./месяц  {% endif %}  {% if item.rentsale == "sale"    %} руб.  {% endif %}</td>
        <td class="td6">(id{{item.pk }}) </td>
     </tr>
 
-        <tr> <td colspan="5"> Комментарий: {{item.comment }} </td></tr>
+
 
 </table>
 
+    <form action=""  method="get" >
+      {% csrf_token %}
+
+      <table><tr>
+          <td >
+       <textarea rows="4" cols="75" name="comment" style="outline:0px; border:1px solid #3ef79e"> {{item.comment }} </textarea>
+        </td>
+       <td style="padding-left:20px" > <br/> Комментарий к заявке  <input type="submit" class="submitbutton" value="ПОМЕНЯТЬ КОММЕНТАРИЙ"> </td>
+       </tr> </table>
+ </form>
+
+
+
     <strong>Критерий подбора объектов:  </strong>
     <ul>
-    <li> объекты с ценой  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &le;   &nbsp; &nbsp; &nbsp;цены  в заявке</li>
-     <li> объекты с площадью  &nbsp; &nbsp; &nbsp; &nbsp; &ge;  &nbsp; &nbsp; &nbsp;площади в заявке</li>
+    <li> объекты с ценой  =  цена  в заявке &plusmn; допуск цены</li>
+     <li> объекты с площадью = площадь в заявке &plusmn; допуск площади</li>
      <li> объекты по округам, указанным в заявке</li>
           </ul>
     <br/><br/>
 
- <h3> {{ result }} </h3>
+ <h2> {{ result }} </h2>
 
+    <div class="blog">
       {%  for item in realties  %}
             <!-- blog item  -->
-             {% include "realty/category_item.html" %}
+             {% include "sotrud/category_item.html" %}
              <!-- blog item  -->
 
       {%  endfor  %}
+    </div>
 
-</div>  <!--itempage-->
-
-
-
+</div>  <!-- sotr_itempage-->
 
 
 

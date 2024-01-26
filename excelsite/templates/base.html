@@ -100,6 +100,16 @@
 <!--   content   -->
   <div class="wrapper" >
        <div class="center" id="content" >
+
+
+           {% if user.is_authenticated %}
+           <div>
+           <a href="/crm/req/">Управление</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="">Выйти</a>&nbsp;&nbsp;&nbsp;&nbsp;<span> Вы в системе, {{  user.first_name }} </span>
+               </div>
+           {% else %} {% endif %}
+
+
+
         <h1>   {{ title }} {{ doptitle }} </h1>
 	    {% block content %}   {% endblock %}
         </div>    <!--  center    -->
@@ -132,24 +142,10 @@ div.under {background-image:url('{%  static 'korp/images/fon2.jpg' %}'); }
 <a href="/korp/userpage/"> Тест2 </a>
 -->
 
-
-<!-- шрифты -->
-{% if menuitem == 300 %}
 <a href="/crm/req/"> Заявки </a>
-<p>menu={{ menuitem }} pk={{ page.pk }}  </p>
-<p>deploy={{ deploy }}   </p>
 
+ {{  user.username }}
 
-        <style>
-        #menu  h3 {font-size:16px; line-height:20px; margin:15px auto 5px auto; }
-        div.moduletablehormenu   a, div.moduletablehormenu span {  font-size:15px;  padding:0 7px; font-weight:400;   }
-div#content p , div#content ul li {   font-size:17px; line-height:20px;   }    /*   page    */
-div#content  p  {margin:5px auto}
-#preim div.preim h4 {   font-size: 19px;   line-height: 26px; }
-#effect {height:300px}
-        </style>
-{% endif %}
-<!-- шрифты -->
 
 </body>
 </html>

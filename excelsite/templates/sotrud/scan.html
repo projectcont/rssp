@@ -1,0 +1,50 @@
+{% extends 'sotrud/sotr.html'  %}
+{%  load static %}
+{%  load korp_tags %}
+
+{% block content %}
+
+<h1> Сканирование </h1>
+
+
+{% if scanned %}
+<h2>Сканирование выполнено</h2>
+<p> Получено {{ fits_number }}  соответствий </p>
+{% else %}
+<div class="export_form_wrapper" >
+<form action=""  method="get" class="formscan" >
+      {% csrf_token %}
+    <p> <input type="hidden" name="scan" value="on" >  </p>
+    <p> <input {% if check == 0  %} class="differ" {% endif %}  type="submit"    value="Сканировать" > </p>
+ </form>
+</div>
+{% endif %}
+
+
+
+
+
+    <table class="scans zayavki" style="width:40%; margin:auto">
+        <caption>
+            <p>Было сканировано: {{time_update}}</p>
+            <p>Допуск цены &plusmn;{{ price_offset }}%</p>
+            <p>Допуск площади &plusmn;{{square_offset }}%</p>
+        </caption>
+
+  <tr>
+    <td>Сканировано объектов {{ realty_number }} </td>  <td   {% if check_realty == 0  %} class="differ" {% endif %} > Сейчас объектов {{ realty_bd }}   </td>
+  </tr>
+        <tr>
+    <td> Сканировано заявок {{ zav_number }} </td>  <td   {% if check_zavs == 0  %} class="differ" {% endif %} >Сейчас заявок {{ zavs_bd }}  </td>
+  </tr>
+</table>
+
+
+
+
+
+
+
+
+
+{% endblock %}

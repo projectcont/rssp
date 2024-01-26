@@ -1,4 +1,6 @@
 
+django template tag
+
 {{ title }}
 
 {% if n > 0 %}
@@ -33,7 +35,7 @@ https://stackoverflow.com/questions/5898776/how-to-refer-to-static-files-in-my-c
 
 
 ССЫЛКА
-<a href="{%  url 'projref' %}">
+<a href="{%  url 'projref' 23  %}">
 <a href="{%  url m.urlname %}">
 
 urlpatterns = [
@@ -48,3 +50,13 @@ urlpatterns = [
 from django import template
 from korp.models import *
 {% load korp_tags %}
+
+
+
+{% comment %}
+-  
+{% endcomment %}
+
+{% autoescape on %}
+    -
+{% endautoescape %}

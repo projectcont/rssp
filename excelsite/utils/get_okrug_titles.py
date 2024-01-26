@@ -23,6 +23,7 @@ def go(item:List[int])->List[str]:
         if n == '11': okrug_list_title.append('Троицкий');
         if n == '12': okrug_list_title.append('Новомосковский');
         if n=='1000': okrug_list_title.append('Все округа');
+        if n == '1001': okrug_list_title.append('Вне Москвы');
 
 
     okrug_str_titles=', '.join(okrug_list_title)

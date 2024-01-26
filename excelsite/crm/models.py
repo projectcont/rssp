@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.apps import apps
 from multiselectfield import MultiSelectField
 import utils.get_okrug_titles
-
+import utils.get_categ_title_from_short
 #apps.get_model('korp', 'Category')
 
 class Client  (models.Model):
@@ -59,7 +59,10 @@ class Zayavki  (models.Model):
 
     comment = models.TextField(blank=True, null=True, verbose_name='Комментарий')
 
-    OKRUG_SELECT = (('1000', 'Все равно'),('1', 'Центральный'), ('2', 'Северный'), ('3', 'Северо-Восточный'),
+    OKRUG_SELECT = (('1001', 'Не применимо (вне Москвы)'),
+                    ('1000', 'Все равно'),
+                    ('1', 'Центральный'),
+                    ('2', 'Северный'), ('3', 'Северо-Восточный'),
                     ('4', 'Восточный'), ('5', 'Юго-Восточный'), ('6', 'Южный'),
                     ('7', 'Юго-Западный'), ('8', 'Западный'),
                     ('9', 'Северо-Западный'),
@@ -69,11 +72,13 @@ class Zayavki  (models.Model):
 
     okrug = MultiSelectField(choices=OKRUG_SELECT, max_choices=12, max_length=30, null=True, verbose_name='Округ')
 
-    square = models.DecimalField(max_digits=20, decimal_places=2, blank=False, verbose_name='мин. площадь кв.м.')
+    square = models.DecimalField(max_digits=20, decimal_places=2, blank=False, verbose_name='площадь кв.м.')
     price = models.DecimalField(max_digits=20, decimal_places=2, blank=False, default=0,  verbose_name='макс. цена, руб ')
 
     is_published = models.BooleanField(default=True, verbose_name='Публикация')
     time_create = models.DateTimeField(auto_now_add=True, verbose_name='Создано')
+
+    scan=models.TextField(blank=True, null=True, verbose_name='Скан объектов')
 
     def __str__(self):
         result=f"Заявка: id{self.id}  {self.categ}  {self.client}"
@@ -83,16 +88,21 @@ class Zayavki  (models.Model):
         result=utils.get_okrug_titles.go(self)
         return result
 
+    def get_scan(self):
+        scancateg=self.scan
+        scancateg=scancateg.strip()
+        scancateg=scancateg.replace(' ', '')
+        if len(scancateg)>0: result=1
+        else: result=0
+        return result
+
     def get_categ_title (self):
-        if self.categ == "ofis": result="Офисы"
-        if self.categ == "torg": result = ""
-        if self.categ == "ofis": result = ""
-        if self.categ == "ofis": result = ""
-        if self.categ == "ofis": result = ""
-        if self.categ == "ofis": result = ""
-        if self.categ == "ofis": result = ""
-        if self.categ == "ofis": result = ""
-        if self.categ == "ofis": result = ""
+        result=utils.get_categ_title_from_short.go(self)
+        return result
+
+    def get_rentsale(self):
+        if self.rentsale == "rent": result="<span class='rent' >Арендовать</span>"
+        if self.rentsale == "sale": result = "<span class='sale'>Купить</span>"
         return result
 
     def get_absolute_url(self): return reverse('requests_ref', kwargs={'zayav_id': self.pk})
@@ -106,8 +116,6 @@ class Zayavki  (models.Model):
 
 #----------------------------------------------------------------------------
 
-
-
 class Export (models.Model):
     title=models.CharField(max_length=255, verbose_name='Название')
     is_using=models.BooleanField(default=True, verbose_name='Применяется')
@@ -117,3 +125,20 @@ class Export (models.Model):
         verbose_name='Выгрузка'
         verbose_name_plural= 'Выгрузки'
         ordering=['title', 'is_using']
+
+
+#------------  Scanresult -------------------------
+
+class Scanset (models.Model):
+    realty_number =  models.IntegerField(null=True, blank=True, verbose_name=' объектов просканировано')
+    zav_number = models.IntegerField(null=True, blank=True, verbose_name=' заявок просканировано')
+    price_offset = models.DecimalField(max_digits=10, decimal_places=2, blank=False,  default=15, verbose_name='Допуск цены %')
+    square_offset = models.DecimalField(max_digits=10, decimal_places=2, blank=False, default=15, verbose_name='Допуск площади %')
+    time_update = models.DateTimeField(auto_now=True)
+
+    def get_absolute_url (self): return reverse('scan_ref',kwargs={'scan_id':self.pk})
+    def __str__(self): return  str(self.pk)
+    class Meta:
+        verbose_name='Сканирование'
+        verbose_name_plural= 'Сканирования'
+        ordering=['time_update',]

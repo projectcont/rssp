@@ -1,28 +1,6 @@
-from korp.models import *
-def go():
-    all_items=[]
+def check(all_realty):
 
-    ofis_items = Ofis.objects.filter()
-    torg_items = Torg.objects.filter()
-    tc_items = Tc.objects.filter()
-    proizv_items = Proizv.objects.filter()
-    sklad_items = Sklad.objects.filter()
-    psn_items = Psn.objects.filter()
-    retail_items = Retail.objects.filter()
-    land_items = Land.objects.filter()
-    flat_items = Flat.objects.filter()
-
-    all_items.extend(ofis_items)
-    all_items.extend(torg_items)
-    all_items.extend(tc_items)
-    all_items.extend(proizv_items)
-    all_items.extend(sklad_items)
-    all_items.extend(psn_items)
-    all_items.extend(retail_items)
-    all_items.extend(land_items)
-    all_items.extend(flat_items)
-
-    for item in all_items:
+    for item in all_realty:
         if item.rent:
             if item.price_rent==None or item.rent_type==None:
                 result_= f"<p> Объект {item.id} в части АРЕНДА не заполнены нужные поля </p> "

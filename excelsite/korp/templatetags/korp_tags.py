@@ -8,11 +8,8 @@ register=template.Library()
 
 @register.filter(name='space_format')
 def del_comma(value):
-
     if isinstance(value, int) or isinstance(value, float) or isinstance(value, decimal.Decimal)  :
-
         x2 = str(int(value))
-
         xv = x2[-18:-15] + " " + x2[-15:-12] + " " + x2[-12:-9] + " " + x2[-9:-6] + " " + x2[-6:-3] + " " + x2[-3:]
         return xv
     else:
@@ -29,4 +26,6 @@ def get_map(map:str):
     map = map.replace('height = "400"', 'height = "500"')
     map = map.replace('frameborder = "1"', 'frameborder = "0"')
     return map
+
+
 
