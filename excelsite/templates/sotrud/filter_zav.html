@@ -1,0 +1,58 @@
+{%  load korp_tags %}
+
+<form action=""  method="get" class="filter">
+      {% csrf_token %}
+
+<table>
+    <tbody>
+    <tr>
+      <td> Категория <select name="filter_categ" id="filter_categ"  >
+          <option value="notchosen"> Выберите </option>
+          <option value="ofis"  id="ofis" > ОФИСЫ </option>
+          <option value="torg" id="torg"> ТОРГОВАЯ ПЛОЩАДЬ </option>
+          <option value="tc"  id="tc" > ЗДАНИЯ </option>
+          <option value="proizv" id="proizv" > ПРОИЗВОДСТВО </option>
+          <option value="sklad" id="sklad"  > СКЛАДЫ </option>
+          <option value="psn"> ПСН </option>
+          <option value="retail"> РИТЕЙЛ </option>
+          <option value="land"> ЗЕМЛЯ </option>
+          <option value="flat"> КВАРТИРЫ  </option>
+      </select> </td>
+        <td> Аренда/продажа
+            <select name="filter_rentsale"   id="filter_rentsale" >
+                <option value="notchosen">Выберите</option>
+  <option value="rent" >Аренда</option>
+  <option value="sale">Продажа</option>
+</select>
+
+        </td>
+         <td> Цена от <input type="text" name="price_from"  id="price_from"  value="" style= "width:100px"> до
+             <input type="text" name="price_to"   id="price_to"  value="" style= "width:100px">  </td>
+
+
+        <td> <input type="submit" class="submitbutton" value="ПРИМЕНИТЬ" style="cursor:pointer"  >
+            </td>
+        <td>
+         <input type="reset" value="ОЧИСТИТЬ ФИЛЬТР" />     </a>
+        </td>
+    </tr>
+
+  </tbody>
+</table>
+<input type="hidden" name="filter_applied"  value="1"  >
+ </form>
+
+     </div>
+
+
+
+ <script>
+
+           document.getElementById('filter_categ').value = '{{ filter_categ }}';
+           document.getElementById('filter_rentsale').value = '{{ filter_rentsale }}';
+
+           document.getElementById('price_from').value = '{{ price_from }}';
+           document.getElementById('price_to').value = '{{ price_to }}';
+
+
+           </script>

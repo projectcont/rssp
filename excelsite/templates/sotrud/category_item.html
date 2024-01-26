@@ -1,0 +1,67 @@
+{%  load static %}
+{% load korp_tags %}
+
+<div class="blog_item">
+
+
+
+            <div class="blog_img">
+                {% if item.photo %}
+                <a href="{{item.get_absolute_url}}"  title="{{item.title}}"    class="blog_podr">
+                <div class="img">
+                         <img src="{{item.photo.url}}"  alt="{{item.title}}" class="blogphoto">
+                    </div>
+                </a>
+                {% else %}
+                <a href="{{item.get_absolute_url}}"  title="{{item.title}}"   class="blog_podr">
+                <div class="img">
+                         <img src="/nophoto.jpg" alt="{{item.title}}" class="blogphoto">
+                    </div>
+                </a>
+
+                {% endif %}
+</div> <!-- blog_img  -->
+
+
+ <div class="blog_content">
+
+<!------------------------>
+{% comment %}
+
+foto {{ item.photo }}
+<br/>
+url {% if item.photo %}
+{{item.photo.url}}
+{% endif %}<br/>
+                 {% endcomment %}
+<!------------------------>
+
+
+<a href="{{item.get_absolute_url}}"  title="{{item.title}}"   class="blog_title"> {{item.title}}  (id{{item.pk}}) </a>
+     <div> Цена аренды&nbsp;&nbsp; {{item.price_rent| space_format}} руб./месяц </div>
+       <div> Цена продажи  {{item.price_sale| space_format}} руб.</div>
+
+
+
+
+     <div> Категория:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{item.get_categ_title }}  </div>
+      <div>Округ Москвы: {{item.get_okrug_title }}  </div>
+
+      <div >Площадь {{item.square | space_format }} м<sup>2</sup> </div>
+                 <div >Адрес: {{item.adres |  truncatewords:400 }}</div>
+                    <a href="{{item.get_absolute_url}}"   title="Подробнее" class="blog_podr">
+                        Подробнее...
+                    </a>
+             </div> <!-- blog_content  -->
+
+
+    <div class="blog_owner">
+                 <p class="owner">
+                    {% autoescape off %}
+                       {{ item.get_owner }}
+                    {% endautoescape %}
+                 </p>
+    </div> <!-- blog_owner  -->
+
+
+</div> <!-- blog item  -->

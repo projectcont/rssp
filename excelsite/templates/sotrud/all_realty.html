@@ -1,0 +1,21 @@
+{% extends 'sotrud/sotr.html'  %}
+{%  load static %}
+{%  load korp_tags %}
+
+{% block content %}
+
+
+<h2> Все объекты недвижимости </h2>
+
+    <div class="blog">
+      {%  for item in realties  %}
+            <!-- blog item  -->
+             {% include "sotrud/category_item.html" %}
+             <!-- blog item  -->
+      {%  endfor  %}
+    </div>
+
+
+
+
+{% endblock %}

@@ -12,7 +12,8 @@ REM git log
 
 
 
-F:; cd F:\djangoproject\ 
+F:; 
+cd F:\djangoproject\ 
 git commit -a -m  "26 january 2024"
 git push origin main
 REM git push -u -f origin main
