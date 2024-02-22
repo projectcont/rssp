@@ -1,0 +1,84 @@
+/* fotoform */
+form.fotoform {width:100%; margin:0; padding:20px 0; background-color:#6cf7b7; height:170px }
+div#content form.fotoform *, div#content form.fotoform p {text-align:center; }
+form.fotoform input {text-align:center; margin:auto;  font-size:17px; line-height:23px;}
+div#content form.fotoform  input.submitbutton, 
+#sotr_itempage input.submitbutton
+ { bolder:0; outline:0; cursor:pointer;line-height:33px; background-color:#0ca91b; color:#ffffff; text-align:center; margin:20px auto; width:300px}
+form.fotoform table  { width:100%; margin-top:20px  }
+form.fotoform h4 {width:100%;font-size:23px; line-height:23px; margin:auto;}
+form.fotoform h5 {width:100%;font-size:15px; line-height:23px; margin:auto; font-weight:800}
+div.fotoformdiv div{width:46%;}
+
+/* zayavki */
+table.zayavki  {width:100%; border:0px solid green; margin:0px 0 40px 0 }
+table.zayavki tr  {width:100%;  background-color:#a9dbfc }
+table.zayavki td  {  padding:5px 0;  border:0px solid green; }
+table.zayavki tr td.td_categ {width:240px; padding-left:10px}
+table.zayavki tr td.td_okrug {width:auto}
+table.zayavki tr td.td_price {width:230px}
+table.zayavki tr td.td_square {width:230px; }
+table.zayavki tr td.td_pk {width:50px}
+table.zayavki *  {font-size:15px; line-height:17px;}
+
+span.rent {font-weight:800; color:red}
+span.sale {font-weight:800; color:green}
+
+form.filter {width:100%; margin:0; padding:20px 0; background-color:#6cf7b7; margin:10px 0 30px 0 }
+form.filter table td {  padding:0 9px ;  border:0px solid green; }
+#content form.filter a.remove_filter {font-size:12px; line-height:15px; font-weight:400 }
+
+
+
+
+#sotr_itempage textarea {font-size:17px; line-height:20px;}
+
+
+/*  menu */
+div.flexcontainer { border:0px solid brown ;  width:100%; display: flex; flex-direction: row; height: auto; align-items: center;  flex-wrap: wrap;  justify-content:space-between;  align-content: start;  margin:auto; }
+div.flexcontainer div {border:0px solid #ffffff ; }
+div.moduletablehormenu   {width:90%;}
+div.rentsale {color:#ffffff; font-size:14px; line-height:17px;font-weight:800 }
+div.moduletablehormenu   a, div.moduletablehormenu span {  font-size:15px;  padding:0 5px; }
+  
+
+td.differ { color:red}
+
+form.formscan input[type=submit] { bolder:0; outline:0; cursor:pointer;line-height:33px; background-color:#0ca91b; color:#ffffff; text-align:center; margin:20px auto; width:300px}
+
+form.formscan input[type=submit].differ {background-color:red;}
+form.formscan input {border:0px solid brown; text-align:center; margin:auto; width:250px }
+form.formscan p {border:0px solid green; text-align:center; margin:auto;  width:320px }
+
+
+ /* usermenu */  
+div.usermenu *  { text-align:center  }
+div.usermenu   {  width:1000px;   margin-bottom:0px;  padding: 10px 0   }
+div.usermenu  a  { font-size:15px; line-height:20px; height:20px; display:inline-block; text-decoration:underline;  text-align: center;  height:auto; color: #ffffff;  font-weight:400; padding:0px 5px;  margin:0px 10px;       }
+div.usermenu  a.hl {color:#72e3f8}
+div.usermenu  span  {display:inline-block;color:#72e3f8}
+
+
+ /* categ list */ 
+div.blog {  width:100%; display:block;   }
+div.blog_item { margin:10px auto; background-color:#6cf7b7; border:0px solid brown ;  width:90%; display: flex;  flex-direction: row;  height: auto;  align-items: center;  flex-wrap: wrap;  justify-content:space-between;  align-content: start; ; }
+div.blog_item * {text-align:left; margin:auto;  }
+#content div.blog_img {width:20%;  border:0x solid green ;}
+#content div.blog_content {width:50%;border:0px solid green ;}
+#content div.blog_owner  {width:20%;border:0px solid green ;}
+#content div.blog * {font-size:14px; line-height:17px;}
+
+
+
+#content div.blog_img div.img {  height:140px; width:auto; overflow:hidden; border:0px solid yellow}
+#content div.blog_img div.img img { height:140px;  overflow:hidden; border:0px solid green }
+#content  a.blog_title { text-align:left; margin:10px 0; display:block;}
+#content  a.blog_podr {  margin:20px 0}
+#content p.owner {display:block}
+
+
+#content table.realty_prop  * {font-weight:800;font-size:14px; line-height:17px;}
+
+#content #check p, #content #check strong {font-size:12px; line-height:17px;}
+
+

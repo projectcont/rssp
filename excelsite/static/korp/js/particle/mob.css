@@ -1,0 +1,27 @@
+
+  /* For Mobile Portrait View */
+@media screen and (max-device-width: 780px) and (orientation: portrait) {
+
+
+       h6, div.wrapper p, div.wrapper form input[type=submit],div.wrapper div.question
+        { font-size:40px; line-height:50px; font-weight:400}
+        div.wrapper form label { font-size:56px; line-height:70px;margin-right:50px; margin-left:20px}
+       html  h1 { font-size:76px; line-height:80px; }
+
+
+       div.wrapper { height:100%}
+       div.center {  margin-top:100px;  border:10px solid #fff ;}
+
+         div.wrapper  input[type=radio]
+     {
+      height:320px; width:320px;
+      font-size:320px;
+      border: 0px solid #1762a9;
+      box-shadow: 0 0 0 0px #1762a9;
+       accent-color: yellow;
+       outline: 15px solid #0a499d;
+    }
+
+
+
+}

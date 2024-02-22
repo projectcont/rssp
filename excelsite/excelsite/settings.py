@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'korp',
     'crm',
     'rest_framework',
+    'ckeditor',
 ]
 
 
@@ -123,6 +124,7 @@ WSGI_APPLICATION = 'excelsite.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -131,6 +133,17 @@ DATABASES = {
         'PASSWORD': 'wbe9n2hN3u',
         'HOST': 'pg3.sweb.ru',
         'PORT': '',
+    }
+}
+
+DATABASES_ = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'gebopostgre',
+        'USER': 'gebopostgre',
+        'PASSWORD': 'yf30j9v_Dqc',
+        'HOST': '77.222.36.52',
+        'PORT': '18203',
     }
 }
 
@@ -185,6 +198,8 @@ MEDIA_ROOT = BASE + '/media/'
 
 print("BASE=",BASE, "MEDIA_ROOT=", MEDIA_ROOT, "STATIC_ROOT=", STATIC_ROOT )
 
+XML_URL='/filesexp/'
+XML_ROOT = BASE + '/filesexp/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -192,3 +207,64 @@ print("BASE=",BASE, "MEDIA_ROOT=", MEDIA_ROOT, "STATIC_ROOT=", STATIC_ROOT )
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = '/korp/userpage/'
+
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'skin': 'moono',
+        # 'skin': 'office2013',
+        'toolbar_Basic': [
+            ['Source', '-', 'Bold', 'Italic']
+        ],
+        'toolbar_YourCustomToolbarConfig': [
+            {'name': 'document', 'items': ['Source', '-', ]},
+            {'name': 'clipboard', 'items': [ 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},
+
+            {'name': 'basicstyles',
+             'items': ['Bold', 'Italic',  'Superscript', '-', ]},
+            {'name': 'paragraph',
+             'items': ['NumberedList', 'BulletedList', '-', ]},
+
+
+
+            '/',  # put this to force next toolbar on new line
+            {'name': 'yourcustomtools', 'items': [
+                # put the name of your editor.ui.addButton here
+                'Preview',
+                'Maximize',
+
+            ]},
+        ],
+        'toolbar': 'YourCustomToolbarConfig',  # put selected toolbar config here
+        # 'toolbarGroups': [{ 'name': 'document', 'groups': [ 'mode', 'document', 'doctools' ] }],
+         'height': 291,
+         'width': '100%',
+        # 'filebrowserWindowHeight': 725,
+        # 'filebrowserWindowWidth': 940,
+        # 'toolbarCanCollapse': True,
+        # 'mathJaxLib': '//cdn.mathjax.org/mathjax/2.2-latest/MathJax.js?config=TeX-AMS_HTML',
+        'tabSpaces': 4,
+        'extraPlugins': ','.join([
+            'uploadimage', # the upload image feature
+            # your extra plugins here
+            'div',
+            'autolink',
+            'autoembed',
+            'embedsemantic',
+            'autogrow',
+            # 'devtools',
+            'widget',
+            'lineutils',
+            'clipboard',
+            'dialog',
+            'dialogui',
+            'elementspath'
+        ]),
+    }
+}
+
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.spaceweb.ru' #Например, smtp.gmail.com
+EMAIL_HOST_USER = 'gecocommers@webrel.ru' #Например, user@gmail.com. Именно его необходимо указывать как ВАШ_EMAIL_ДЛЯ_ОТПРАВКИ_СООБЩЕНИЯ в исходном коде предыдущего пункта
+EMAIL_HOST_PASSWORD = 'vkcn32Realty'

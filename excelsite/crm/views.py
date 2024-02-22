@@ -16,6 +16,8 @@ import utils.fotos_format1  as fotos_format1
 import utils.fotos_format2 as fotos_format2
 import utils.fotos_orig as fotos_orig
 from utils.Realtyitem_by_id_categ_ import Realtyitem_by_id_categ
+from django.contrib.auth.decorators import login_required
+import utils.check
 
 
 from utils.scan_color import color_
@@ -26,36 +28,30 @@ from .models import *
 
 
 #-------------  список заявок  --------------------------------------------------------------------
-
+@login_required
 def requests (request: HttpRequest, menuitem=0) -> HttpResponse:
     ''' показывает список заявок '''
-    if True:
-        # if request.user.is_authenticated:
+    zavs =Zayavki.objects.filter(is_published=True).order_by('-time_create')
+    filter_data={'filter_categ':'', 'filter_rentsale':'','price_from':'','price_to':'',}
 
-        zavs =Zayavki.objects.filter(is_published=True).order_by('-time_create')
+    if  'filter_applied' in request.GET:
+        import utils.apply_filter
+        print(len(zavs))
+        zavs = utils.apply_filter.go (request.GET, filter_data, zavs)
+        print(len(zavs))
+    context = {'items': zavs, 'user':request.user, 'menuitem':menuitem, 'sotr': True, "show_filter":1, "show_realty":0  }
+    context.update(filter_data)
+    return render(request=request, template_name='sotrud/requests.html', context=context)
 
-        filter_data={'filter_categ':'', 'filter_rentsale':'','price_from':'','price_to':'',}
-
-        if  'filter_applied' in request.GET:
-            import utils.apply_filter
-            print(len(zavs))
-            zavs = utils.apply_filter.go (request.GET, filter_data, zavs)
-            print(len(zavs))
-
-        context = {'items': zavs, 'user':request.user, 'menuitem':menuitem, 'sotr': True, "show_filter":1, "show_realty":0  }
-        context.update(filter_data)
-        return render(request=request, template_name='sotrud/requests.html', context=context)
-    else:
-        return HttpResponse("нет доступа")
 
 
 #------------- страница одной заявки  -----------------------------------------------------------------
 
 def itemreq (request: HttpRequest, id: int, menuitem=0) -> HttpResponse:
     ''' показывает страницу заявки со списком подходящих объктов'''
-    print("request.user.is_authenticated", request.user.is_authenticated)
-    #if request.user.is_authenticated:
-    if True:
+    #print("request.user.is_authenticated", request.user.is_authenticated)
+    if request.user.is_authenticated:
+
         zav = Zayavki.objects.get(pk=id)
         okrug_str_titles = utils.get_okrug_titles.go(zav)
         rentsale=zav.rentsale
@@ -77,13 +73,9 @@ def itemreq (request: HttpRequest, id: int, menuitem=0) -> HttpResponse:
                 #получает объект по его id и категории
                 item = Realtyitem_by_id_categ(realty_id,realty_categ)
                 realty_list.append(item)
-
         if 'comment' in request.GET:
            zav.comment =  request.GET.get('comment')
            zav.save(update_fields=["comment"])
-
-        # фильтрация списка
-        #realty_items_selected = utils.get_filter.go(price=price, square=square, okrug_list=okrug_list_ids, categ=categ, rentsale=rentsale)
 
         context={"result": result, 'pricetype': pricetype,   'rentsale':rentsale,   'item': zav,  'menuitem':menuitem, "realties" : realty_list, 'okrug_str_titles': okrug_str_titles, 'sotr': True }
         return render(request=request, template_name='sotrud/podbor.html', context=context)
@@ -94,6 +86,9 @@ def itemreq (request: HttpRequest, id: int, menuitem=0) -> HttpResponse:
 #-------------- ФОРМАТИРОВАНИЕ ФОТО -------------------------------------------------------------------
 
 def formatfotos (request: HttpRequest,  menuitem=0) -> HttpResponse:
+
+    if not request.user.is_authenticated:
+        raise Exception ('Нет доступа к этой странице')
 
     media_paths = fotos_media_paths.go()
     photos_number = fotos_amount.go(media_paths)
@@ -126,27 +121,35 @@ def formatfotos (request: HttpRequest,  menuitem=0) -> HttpResponse:
 
 def scan (request: HttpRequest, menuitem=0) -> HttpResponse:
     ''' показывает станицу сканирования '''
-    if True:
+    if request.user.is_authenticated:
         scanned=0
-
-    #if request.user.is_authenticated
+        counter_avito=''
         scan = Scanset.objects.get(pk=2)
         price_offset = scan.price_offset
         square_offset = scan.square_offset
+        check_results=''
 
         if  'scan' in request.GET:
+
+
             # если нажата кнопка Сканировать
             fits_number=select(price_offset, square_offset)
             realty_bd_len, zavs_bd_len, all_realty = lenths()
             scan.zav_number = zavs_bd_len
             scan.realty_number = realty_bd_len
-            print("в базу ",zavs_bd_len,realty_bd_len)
-            scan.save(update_fields=["zav_number", "realty_number",])
-
+            scan.time_update=datetime.now()
+            scan.save(update_fields=["zav_number", "realty_number","time_update"])
 
             scan = Scanset.objects.get(pk=2)
             check_zavs, check_realty, check, zav_number, realty_number = color_(scan, zavs_bd_len, realty_bd_len )
             scanned =1
+
+            check_results=utils.check.go(all_realty)
+
+            # avito
+            import utils_export.avito_process
+            counter_avito = utils_export.avito_process.go(all_realty)
+
         else:
             # если выбрана страница скан
             realty_bd_len, zavs_bd_len, all_realty = lenths()
@@ -155,7 +158,7 @@ def scan (request: HttpRequest, menuitem=0) -> HttpResponse:
             fits_number=""
         time_update = scan.time_update
 
-        context = { 'fits_number': fits_number , 'scanned':scanned,'check_zavs':check_zavs,  'check_realty':check_realty,  'check':check, 'sotr': True, 'menuitem': menuitem, 'realty_number':realty_number, 'zav_number':zav_number, 'time_update':time_update, 'price_offset':price_offset, 'square_offset':square_offset, "realty_bd": realty_bd_len,"zavs_bd": zavs_bd_len, }
+        context = { 'fits_number': fits_number , 'check_results':check_results,  'scanned':scanned,'check_zavs':check_zavs,  'check_realty':check_realty,  'check':check, 'sotr': True, 'menuitem': menuitem, 'realty_number':realty_number, 'zav_number':zav_number, 'time_update':time_update, 'price_offset':price_offset, 'square_offset':square_offset, "realty_bd": realty_bd_len,"zavs_bd": zavs_bd_len, 'counter_avito':counter_avito }
         return render(request=request, template_name='sotrud/scan.html', context=context)
 
     else:
@@ -165,9 +168,10 @@ def scan (request: HttpRequest, menuitem=0) -> HttpResponse:
 
 def allrealty  (request: HttpRequest,  menuitem=0) -> HttpResponse:
     ''' показывает список всех добавленных объктов'''
-    print("request.user.is_authenticated", request.user.is_authenticated)
+
     if request.user.is_authenticated:
         realty_bd_len, zavs_bd_len, all_realty = lenths()
+        all_realty.sort(reverse = True)
         context = {'realties': all_realty, "menuitem": menuitem}
         return render(request=request, template_name='sotrud/all_realty.html', context=context)
     else:
@@ -203,6 +207,18 @@ def showzavs (request: HttpRequest, menuitem=0, realty_id=0, realty_categ=0 ) ->
         return render(request=request, template_name='sotrud/requests.html', context=context)
     else:
         return HttpResponse("нет доступа")
+
+# ----------показывает форму логин ---------------------------------------------------
+
+class LoginUser (LoginView):
+    form_class = AuthenticationForm
+    template_name = 'registration/login.html'
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title']='Логин пользователя'
+        return context
+
+# ----------  ---------------------------------------------------
 
 
 

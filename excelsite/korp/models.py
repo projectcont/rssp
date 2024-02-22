@@ -92,12 +92,11 @@ class Realty (models.Model):
     title=models.CharField(max_length=255, verbose_name='Название',blank=False,)
     adres = models.CharField(max_length=255, verbose_name='Адрес',blank=False, help_text = "(с городом)")
     map = models.TextField(blank=False, verbose_name='Код с яндекс карты')
-    square=models.DecimalField(max_digits=10, decimal_places=2, blank=False,verbose_name='Площадь кв.м.')
+
     photo=models.ImageField(upload_to="photos/osn", null=False, blank=True, verbose_name='Фото (основное)')
     time_create=models.DateTimeField(auto_now_add=True, verbose_name='Создано')
 
-    #categ = models.ManyToManyField("Category", related_name="Категория",blank=False, verbose_name='Категория')
-    #worker = models.ForeignKey('auth.user', on_delete=models.PROTECT, blank=False, verbose_name='Сотрудник')
+
 
     worker =  models.ForeignKey(User, on_delete=models.PROTECT, blank=False, verbose_name='Сотрудник')
     owner  =  models.ForeignKey(Owner, on_delete=models.PROTECT, default=1, blank=False, verbose_name='Владелец')
@@ -107,7 +106,7 @@ class Realty (models.Model):
     # --- sale ---
     sale = models.BooleanField(default=False, verbose_name='Продажа')
     price_sale = models.DecimalField(max_digits=10, decimal_places=0, default=0, blank=True, null=True, verbose_name='Цена продажи')
-    sale_type_select = (('1', 'Продажа'), ('2', 'Переуступка прав аренды'),)
+    sale_type_select = (('Продажа', 'Продажа'), ('Продажа', 'Переуступка прав аренды'),)
     sale_type = models.CharField(max_length=100, choices=sale_type_select, blank=True, null=True, verbose_name='Тип продажи', )
 
     sale_right_select = ( ('Собственник', 'Собственник'), ('Посредник', 'Посредник'), ('Застройщик', 'Застройщик (для квартир)'),)
@@ -116,7 +115,7 @@ class Realty (models.Model):
     # --- rent ---
     rent = models.BooleanField(default=False, verbose_name='Аренда')
     price_rent = models.DecimalField(max_digits=10, decimal_places=0, default=0, blank=True, null=True, verbose_name='Цена аренды')
-    rent_type_select = ( ('1', 'Прямая'), ('2', 'Субаренда'),)
+    rent_type_select = ( ('Прямая', 'Прямая'), ('Прямая', 'Субаренда'),)
     rent_type = models.CharField(max_length=100, choices=rent_type_select, blank=True, null=True, verbose_name='Тип аренды', )
 
     OKRUG_SELECT = ( ('13', 'не применимо (вне Москвы)'),  ('1', 'Центральный'), ('2', 'Северный'), ('3', 'Северо-Восточный'), ('4', 'Восточный'), ('5', 'Юго-Восточный'), ('6', 'Южный'), ('7', 'Юго-Западный'), ('8', 'Западный'), ('9', 'Северо-Западный'),  ('10', 'Зеленоградский'), ('11', 'Троицкий'),  ('12', 'Новомосковский'),)
@@ -141,11 +140,16 @@ class Realty (models.Model):
 
     categ = models.CharField(max_length=255, null=True, blank=True, default='undef', verbose_name='Категория')
 
-    '''
+    idl = models.CharField(max_length=255, null=True, blank=True, default='undef', verbose_name='Категория')
+
+    ''' 
     def get_idl (self):
-        result = 'realty' + self.categ + self.pk     
-        return result
+        result =  self.categ + self.pk     
+        return result 
+        idl.default = get_idl
     '''
+
+
 
     def get_categ_title(self):
         result = utils.get_categ_title_from_short.go(self)
@@ -166,7 +170,7 @@ class Realty (models.Model):
         return result
 
 
-    idl = models.CharField(max_length=255, null=True, blank=True, default='2222', verbose_name='уникальный ID')
+    idl = models.CharField(max_length=255, null=True, blank=True,  verbose_name='уникальный ID')
 
     description = models.TextField(blank=False, null=True, verbose_name='Описание')
 
@@ -188,7 +192,22 @@ class Realty (models.Model):
     metatitle = models.CharField(max_length=255, null=True, blank=True, verbose_name='meta title')
     metadescription = models.TextField(null=True, blank=True, verbose_name='meta description')
 
-    scan = models.TextField(blank=True, null=True, verbose_name='Скан заявок')
+    scan = models.TextField(blank=True, null=True, default='0', verbose_name='Скан заявок')
+
+    def get_scan(self):
+        scancateg=self.scan
+        if (isinstance(scancateg,str)):
+            scancateg=scancateg.strip()
+            scancateg=scancateg.replace(' ', '')
+            if len(scancateg) > 0:
+                result = 1
+            else:
+                result = 0
+            if scancateg == '0': result = -1
+        else: result=-1
+        return result
+
+
 
     def get_fields(self):
         result= [  [field.name, field.verbose_name, field.value_from_object(self)] for field in self.__class__._meta.fields]
@@ -201,6 +220,8 @@ class Realty (models.Model):
         if (self.price_sale != 0) and (self.price_rent != 0) and (self.price_sale != None) and (self.price_rent != None): result = "salerent"
         if ((self.price_sale == 0) and (self.price_rent == 0)) or ((self.price_sale == None) and (self.price_rent == None)): result = "noprice"
         return result
+
+
 
     def get_map(self):
         v=self.map
@@ -224,23 +245,32 @@ class Realty (models.Model):
     class Meta:
         abstract = True
 
+    def __lt__(self, other):
+        result=self.time_create < other.time_create
+        return result
+
+    def __gt__(self, other):
+        result= self.time_create > other.time_create
+        return result
+
 
 
 class RealtyCommon (Realty):
     BUILD_CLASS = (('А', 'А'), ('А+', 'А+'), ('B', 'B'), ('B+', 'B+'), ('C', 'C'), ('C+', 'C+'), ('D', 'D'), ('D+', 'D+'),)
     buildclass = models.CharField(max_length=10, choices=BUILD_CLASS, blank=True, null=True, verbose_name='Класс здания', )
     bc = models.CharField(max_length=255, blank=True, null=True, verbose_name='Наименование БЦ')
+    square = models.DecimalField(max_digits=10, decimal_places=2, blank=False, verbose_name='Площадь кв.м.')
 
     OTDELKA_SELECT = (('без отделки', 'без отделки'), ('чистовая', 'чистовая'), ('офисная', 'офисная'),)
     otdelka = models.CharField(max_length=50, choices=OTDELKA_SELECT, blank=True, null=True, verbose_name='Отделка', help_text = " обязательно для - Офис, ПСН, Торговое помещение, Питание,Гостиница, Здание" )
 
     BUILD_TYPE = (('Бизнес-центр ', 'Бизнес-центр '), ('Торговый центр', 'Торговый центр'), ('Административное здание', 'Административное здание'), ('Жилой дом', 'Жилой дом'), ('другой', 'другой'),)
-    buildtype = models.CharField(max_length=100, choices=BUILD_TYPE, blank=True, null=True, verbose_name='Тип здания', help_text = "обязательно для: Офис, ПСН, Торговое, Склад, Производственное, Питания , Гостиница, Автосервис , Здание" )
+    buildtype = models.CharField(max_length=100, choices=BUILD_TYPE, blank=False, null=True, verbose_name='Тип здания', help_text = "обязательно для: Офис, ПСН, Торговое, Склад, Производственное, Питания , Гостиница, Автосервис , Здание" )
 
     height = models.DecimalField(max_digits=10, decimal_places=2, default=0, blank=True, null=True, verbose_name='Высота потолка (м)')
 
     entrance_type = (  ('С улицы',  'С улицы'), ('Со двора', 'Со двора'), )
-    entrance = models.CharField(max_length=10, choices=entrance_type, blank=False, null=True, verbose_name='Вход', help_text = "обязательно для: ПСН, Питание" )
+    entrance = models.CharField(max_length=10, choices=entrance_type, blank=True, null=True, verbose_name='Вход', help_text = "обязательно для: Торг.площадь, ПСН, Питание" )
 
     parking_type = (  ('Нет', 'Нет'), ('На улице', 'На улице'), ('В здании', 'В здании'),   )
     parking = models.CharField(max_length=100, choices = parking_type, blank=True, null=True, verbose_name='Тип парковки', help_text = "обязательно для: Офис, ПСН, Торговое, Питание, Гостиница, Здание" )
@@ -266,6 +296,7 @@ class Ofis (RealtyCommon):
 #---------------- 4  Торговая площадь ---------------
 class Torg (RealtyCommon):
     categ = models.CharField(max_length=255, null=True, blank=True, default='torg', verbose_name='Категория')
+    retail = models.BooleanField(default=False, verbose_name='Ритейл')
     class Meta:
         abstract = False
         verbose_name = 'Торговая площадь'
@@ -280,12 +311,26 @@ class Flat (Realty):
     marketType = models.CharField(max_length=100, choices=marketType_select, blank=False, null=True, verbose_name='Новостройка или Вторичка ', )
     houseType_select = (('Кирпичный', 'Кирпичный'), ('Панельный', 'Панельный'),  ('Блочный', 'Блочный'),  ('Монолитный', 'Монолитный'),  ('Монолитно-кирпичный', 'Монолитно-кирпичный'),     )
     houseType = models.CharField(max_length=100, choices=houseType_select, blank=False, null=True, verbose_name='Тип дома', )
+    floors = models.IntegerField(null=True, blank=False, verbose_name='Этажность')
+
     rooms_select = (   ('Студия', 'Студия'), ('Своб. планировка', 'Своб. планировка'), ('1', '1'),   ('2', '2'),   ('3', '3'),   ('4', '4'),   ('5', '5'),   ('6', '6'),   ('7', '7'),   ('8', '8'),   ('9', '9'),   ('10 и более', '10 и более'),    )
     rooms = models.CharField(max_length=100, choices=rooms_select, blank=False, null=True,   verbose_name='Количество комнат', )
     status_select = (  ('Квартира', 'Квартира'), ('Апартаменты', 'Апартаменты'), )
     status = models.CharField(max_length=100, choices=status_select, blank=False, null=True,  verbose_name='Статус', )
+    square = models.DecimalField(max_digits=10, decimal_places=2, blank=False, null=True, verbose_name='Площадь кв.м.')
+
     NewDevelopmentId= models.CharField(max_length=300, blank=False, null=True,
                                         verbose_name='NewDevelopmentId ', help_text = " Обязательно. ID корпуса (элементы Housing); если корпусов нет, то ID жилого комплекса (элементы Object)" )
+
+    property_right_select = (('Собственник', 'Собственник'), ('Посредник', 'Посредник'), ('Застройщик', 'Застройщик'), )
+    property_right = models.CharField(max_length=100, choices=property_right_select, blank=False, null=True,
+                                      verbose_name='Право собственности ', )
+    sale = models.BooleanField(default=True, verbose_name='Продажа')
+
+    OTDELKA_SELECT = (('Без отделки', 'Без отделки'), ('Предчистовая', 'Предчистовая'),  ('Чистовая', 'Чистовая'), )
+    otdelka = models.CharField(max_length=50, choices=OTDELKA_SELECT, blank=False, null=True, verbose_name='Отделка',
+                               help_text=" обязательно для - Офис, ПСН, Торговое помещение, Питание,Гостиница, Здание")
+
     class Meta:
         abstract = False
         verbose_name = 'Квартира'
@@ -293,15 +338,31 @@ class Flat (Realty):
     def get_absolute_url(self):
         return reverse('itemref_flat', kwargs={'pk': self.pk, })
 
-#----------------5 Торговые центры ---------------
-class Tc (RealtyCommon):
+#----------------5 Здания ---------------
+class Tc (Realty):
     categ = models.CharField(max_length=255, null=True, blank=True, default='tc', verbose_name='Категория')
+    square = models.DecimalField(max_digits=10, decimal_places=2, blank=False, verbose_name='Площадь кв.м.')
+    BUILD_CLASS = (('А', 'А'), ('А+', 'А+'), ('B', 'B'), ('B+', 'B+'), ('C', 'C'), ('C+', 'C+'), ('D', 'D'), ('D+', 'D+'),)
+    buildclass = models.CharField(max_length=10, choices=BUILD_CLASS, blank=True, null=True, verbose_name='Класс здания', )
+    bc = models.CharField(max_length=255, blank=True, null=True, verbose_name='Наименование БЦ')
+    OTDELKA_SELECT = (('Без отделки', 'Без отделки'), ('Чистовая', 'Чистовая'), ('Офисная', 'Офисная'),)
+    otdelka = models.CharField(max_length=50, choices=OTDELKA_SELECT, blank=True, null=True, verbose_name='Отделка',
+                               help_text=" обязательно для - Офис, ПСН, Торговое помещение, Питание,Гостиница, Здание")
+    BUILD_TYPE = (('Бизнес-центр ', 'Бизнес-центр '), ('Торговый центр', 'Торговый центр'),
+                  ('Административное здание', 'Административное здание'), ('Жилой дом', 'Жилой дом'),
+                  ('другой', 'другой'),)
+    buildtype = models.CharField(max_length=100, choices=BUILD_TYPE, blank=False, null=True, verbose_name='Тип здания',
+                                 help_text="обязательно для: Офис, ПСН, Торговое, Склад, Производственное, Питания , Гостиница, Автосервис , Здание")
+    parking_type = (('Нет', 'Нет'), ('На улице', 'На улице'), ('В здании', 'В здании'),)
+    parking = models.CharField(max_length=100, choices=parking_type, blank=True, null=True, verbose_name='Тип парковки',
+                               help_text="обязательно для: Офис, ПСН, Торговое, Питание, Гостиница, Здание")
+
     class Meta:
-        abstract = False
-        verbose_name = 'Здание'
-        verbose_name_plural = 'Здания'
+            abstract = False
+            verbose_name = 'Здание'
+            verbose_name_plural = 'Здания'
     def get_absolute_url(self):
-        return reverse('itemref_tс', kwargs={'pk': self.pk, })
+            return reverse('itemref_tc', kwargs={'pk': self.pk, })
 
 #----------------6 ------
 
@@ -336,23 +397,28 @@ class Psn(RealtyCommon):
     def get_absolute_url(self):
         return reverse('itemref_psn', kwargs={'pk': self.pk, })
 
-#---------------- 10 Ритейл---------------
-class Retail(RealtyCommon):
-    categ = models.CharField(max_length=255, null=True, blank=True, default='retail', verbose_name='Категория')
-    class Meta:
-        abstract = False
-        verbose_name = 'Ритейл'
-        verbose_name_plural = 'Ритейл'
-    def get_absolute_url(self):
-        return reverse('itemref_retail', kwargs={'pk': self.pk, })
 
 #----------------11 Земля ---------------
-class Land(RealtyCommon):
+class Land(Realty):
     categ = models.CharField(max_length=255, null=True, blank=True, default='land', verbose_name='Категория')
+    landarea = models.DecimalField(max_digits=10, decimal_places=2, blank=False, null=True, verbose_name='Площадь участка, в сотках')
+
+    landtype_select = (('Поселений (ИЖС)', 'Поселений (ИЖС)'), ('Сельхозназначения (СНТ, ДНП)', 'Сельхозназначения (СНТ, ДНП)'),
+                       ('Промназначения', 'Промназначения'), ('Личное подсобное хозяйство (ЛПХ)', 'Личное подсобное хозяйство (ЛПХ)'), )
+    land_type = models.CharField(max_length=50, choices=landtype_select, blank=False, null=True, verbose_name='Тип участка', )
+
+    lease_select = ( ('Без залога', 'Без залога'),('0,5 месяца', '0,5 месяца'),('1 месяц', '1 месяц'),('1,5 месяца', '1,5 месяца'),('2 месяца', '2 месяца'),('2,5 месяца', '2,5 месяца'),('3 месяца', '3 месяца'),  )
+    lease = models.CharField(max_length=50, choices=lease_select, blank=True, null=True, verbose_name='Залог', )
+    commission = models.IntegerField(null=True, blank=True, verbose_name='Размер комиссии в %', help_text="обязательно для долгосрочной аренды в случае права собственности Посредник,целое число от 0 до 200")
+
+    property_right_select = ( ('Собственник', 'Собственник'), ('Посредник', 'Посредник'), )
+    property_right = models.CharField(max_length=100, choices=property_right_select, blank=False, null=True, verbose_name='Право собственности ',)
+
     class Meta:
         abstract = False
         verbose_name = 'Земля'
         verbose_name_plural = 'Земля'
+
     def get_absolute_url(self):
         return reverse('itemref_land', kwargs={'pk': self.pk, })
 

@@ -1,18 +1,19 @@
 from django import forms
 from .models import *
+from ckeditor.widgets import CKEditorWidget
 
 # https://docs.djangoproject.com/en/4.2/ref/forms/fields/#charfield
 
-class addPageForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['cat'].empty_label = "Категория не выбрана"
-        widgets={
-            "title": forms.TextInput(attrs={"class":"form-input"}  ),
-            "content": forms.Textarea(attrs={"cols": 60,"rows": 100, })
-        }
-
+class FormAdmin(forms.ModelForm):
+    description=forms.CharField(widget=CKEditorWidget)
     class Meta:
-        model = Pages
-        fields = ['title', 'content',]
-        # fields='__all__'
+        model = RealtyCommon
+        fields = '__all__'
+
+
+
+class ContactForm(forms.Form):
+	client = forms.CharField(max_length = 100)
+
+	phone = forms.CharField()
+

@@ -12,20 +12,20 @@ def select (price_offset, square_offset):
     Proizv.objects.all().update(scan="")
     Sklad.objects.all().update(scan="")
     Psn.objects.all().update(scan="")
-    Retail.objects.all().update(scan="")
+
     Land.objects.all().update(scan="")
     Flat.objects.all().update(scan="")
 
     # список заявок
     zavs = Zayavki.objects.filter(is_published=True)
 
+    # списки объектов
     ofis_items = Ofis.objects.filter(is_published=True)
     torg_items = Torg.objects.filter(is_published=True)
     tc_items = Tc.objects.filter(is_published=True)
     proizv_items = Proizv.objects.filter(is_published=True)
     sklad_items = Sklad.objects.filter(is_published=True)
     psn_items = Psn.objects.filter(is_published=True)
-    retail_items = Retail.objects.filter(is_published=True)
     land_items = Land.objects.filter(is_published=True)
     flat_items = Flat.objects.filter(is_published=True)
 
@@ -43,7 +43,7 @@ def select (price_offset, square_offset):
         for item in proizv_items:  fits_number =   fit(item, zav, price_offset, square_offset,  fits_number )
         for item in sklad_items:  fits_number =   fit(item, zav, price_offset, square_offset,  fits_number )
         for item in psn_items:  fits_number =   fit(item, zav, price_offset, square_offset,  fits_number )
-        for item in retail_items:  fits_number =   fit(item, zav, price_offset, square_offset,  fits_number )
+
         for item in land_items:  fits_number =   fit(item, zav, price_offset, square_offset,  fits_number )
         for item in flat_items:  fits_number =   fit(item, zav, price_offset, square_offset,  fits_number )
 
@@ -59,7 +59,7 @@ def select (price_offset, square_offset):
     Proizv.objects.bulk_update( proizv_items , ['scan'])
     Sklad.objects.bulk_update(sklad_items , ['scan'])
     Psn.objects.bulk_update( psn_items, ['scan'])
-    Retail.objects.bulk_update( retail_items , ['scan'])
+
     Land.objects.bulk_update( land_items , ['scan'])
     Flat.objects.bulk_update( flat_items , ['scan'])
 

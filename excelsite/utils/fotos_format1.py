@@ -30,17 +30,7 @@ def go(media_paths, width_to):
         img = Image.open(file_path)
         img_formatted = format_w (img, width_to)
         img_formatted.save(file_path)
-
-
-
-        ''' 
-        filename = os.path.basename(file)
-        basename, extension = os.path.splitext(filename)
-        basename = basename + '_form'
-        file_formatted = basename + extension
-        file_path_to = Path(media_osn, file_formatted)
-        print("file_path_to", file_path_to)
-        '''
+        
 
 
     result = "Фото отформатированы по ширине"

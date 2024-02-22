@@ -52,6 +52,9 @@ url {% if item.photo %}
                     <a href="{{item.get_absolute_url}}"   title="Подробнее" class="blog_podr">
                         Подробнее...
                     </a>
+     <h2>rent {{item.rent_type}}</h2>
+     <h2>sale {{item.sale_type}}</h2>
+
              </div> <!-- blog_content  -->
 
 
@@ -59,8 +62,15 @@ url {% if item.photo %}
                  <p class="owner">
                     {% autoescape off %}
                        {{ item.get_owner }}
-                    {% endautoescape %}
+
+                   <br/><br/>Дата добавления объекта:<br/> {{ item.time_create}}
+                     {% endautoescape %}
                  </p>
+
+
+ {% include "realty/zav_button.html" %}
+
+
     </div> <!-- blog_owner  -->
 
 

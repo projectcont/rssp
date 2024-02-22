@@ -1,13 +1,42 @@
+
+<form action="/korp/formsent/" method="post" id="form-client">
+{% csrf_token %}
+    {{ form.non_field_errors }}
+    <div> <h3>  ЗАЯВКА НА ПРОСМОТР </h3> </div>
+	<div>
+	  <label for="client">Ваше имя:</label>
+	  {{ form.client.errors }}
+	  {{ form.client }}
+	</div>
+
+	<div>
+	  <label for="phone">Ваш телефон:</label>
+	  {{ form.phone.errors }}
+	  {{ form.phone }}
+	</div>
+
+	<input type="submit" value="Отправить"/>
+</form>
+<!--
+
+
 <form action="" method="post"  id="form-client">
                 {% csrf_token %}
                  <div class="form-error"  > {{ form.non_field_errors  }}  </div>
 
                 <div> <h3>  ЗАЯВКА НА ПРОСМОТР </h3> </div>
-                <div> <label for="name">Ваше имя </label></div>
-				<div><input type="text" id="name"></div>
-<div> </div>
+                <div> <label for="id_klient">Ваше имя </label></div>
+				<div>
+                    {{ form.klient.errors }}
+	                {{ form.klient }}
+                </div>
+
                 <div> <label for="phone">Ваш телефон</label></div>
-				<div><input type="text" id="phone"></div>
+				<div><input type="text" id="phone">
+                {{ form.phone.errors }}
+	  {{ form.phone }}
+                </div>
 
     <div> <input type="submit" value="Отправить" class="submut" /> </div>
 </form>
+-->

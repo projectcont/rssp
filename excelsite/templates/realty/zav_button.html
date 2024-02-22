@@ -1,0 +1,13 @@
+{%  load static %}
+{% load korp_tags %}
+
+
+{% if user.is_authenticated %}
+{% if item.get_scan == 1 %}
+ <a href="{%  url 'showzavs_ref'  item.pk item.categ %}"  class="selecthl" >   Заявки  </a>
+{% elif item.get_scan == 0 %}
+ <p class="select">Нет заявок</p>
+{% else %}
+ <p class="notscanned">Не сканировано</p>
+{% endif %}
+{% else %} {% endif %}

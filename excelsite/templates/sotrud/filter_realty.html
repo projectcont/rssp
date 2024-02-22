@@ -1,0 +1,59 @@
+{%  load korp_tags %}
+
+<form action=""  method="get" class="filter">
+      {% csrf_token %}
+
+<table>
+    <tbody>
+    <tr>
+       <td>Фильтр объектов</td>
+
+      <td>
+          Округ Москвы
+          <select name="filter_okrug" id="filter_okrug"  >
+           <option   id="re0" value="select" autofocus="1" > не выбран </option>
+          <option value="13"  id="re13" > объект вне Москвы </option>
+          <option value="1" id="re1"> Центральный </option>
+           <option value="2" id="re2"> Северный </option>
+           <option value="3" id="re3"> Северо-Восточный </option>
+           <option value="4" id="re4"> Восточный </option>
+           <option value="5" id="re5"> Юго-Восточный </option>
+           <option value="6" id="re6"> Южный </option>
+           <option value="7" id="re7"> Юго-Западный </option>
+           <option value="8" id="re8"> Западный </option>
+           <option value="9" id="re9"> Северо-Западный </option>
+           <option value="10" id="re10"> Зеленоградский </option>
+           <option value="11" id="re11"> Троицкий </option>
+           <option value="12" id="re12"> Новомосковский </option>
+      </select>
+      </td>
+
+        <td> Площадь от <input type="text" name="square_from"  id="square_from"  value="" style= "width:100px">м<sup>2</sup> до
+             <input type="text" name="square_to"   id="square_to"  value="" style= "width:100px">м<sup>2</sup>
+        </td>
+
+
+        <td> <input type="submit" class="submitbutton" value="ПРИМЕНИТЬ" style="text-align:center; padding:0 40px;margin:auto; cursor:pointer"  >
+            </td>
+        <td>
+           <input type="reset" value="ОЧИСТИТЬ ФИЛЬТР" />
+
+
+        </td>
+    </tr>
+
+  </tbody>
+</table>
+<input type="hidden" name="filter_applied"  value="1"  >
+ </form>
+
+
+
+
+
+ <script>
+           document.getElementById('filter_okrug').value = '{{ filter_okrug }}';
+           document.getElementById('square_from').value = '{{ square_from }}';
+           document.getElementById('square_to').value = '{{ square_to }}';
+
+</script>

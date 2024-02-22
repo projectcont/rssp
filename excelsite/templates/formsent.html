@@ -1,0 +1,14 @@
+{% extends 'base.html'  %}
+{%  load static %}
+
+
+{% block content %}
+
+<h1> Ваша заявка отправлена <h1>
+{% autoescape off %}
+    {{ page.content }}
+{% endautoescape %}
+
+
+
+{% endblock %}

@@ -43,13 +43,14 @@ class Client  (models.Model):
     class Meta:
         verbose_name='Клиент'
         verbose_name_plural= 'Клиенты'
+        verbose_name_plural= 'Клиенты'
         ordering=['id']
 
 
 #------ Zayavki---------------------
 
 class Zayavki  (models.Model):
-    categ_select = (  ('ofis', 'ОФИСЫ '),    ('torg', 'ТОРГОВАЯ ПЛОЩАДЬ'),    ('tc', 'ЗДАНИЯ'),        ('proizv', 'ПРОИЗВОДСТВО'),    ('sklad', 'СКЛАДЫ'),    ('psn', 'ПСН'),    ('retail', 'РИТЕЙЛ'),    ('land', 'ЗЕМЛЯ'),    ('flat', 'КВАРТИРЫ'),   )
+    categ_select = (  ('ofis', 'ОФИСЫ '),    ('torg', 'ТОРГОВАЯ ПЛОЩАДЬ'),    ('tc', 'ЗДАНИЯ'),        ('proizv', 'ПРОИЗВОДСТВО'),    ('sklad', 'СКЛАДЫ'),    ('psn', 'ПСН'),       ('land', 'ЗЕМЛЯ'),    ('flat', 'КВАРТИРЫ'),   )
     categ  = models.CharField(max_length=100, choices= categ_select, blank=False, null=True, verbose_name='Категория', )
 
     client = models.ForeignKey('Client', on_delete=models.PROTECT, blank=False, verbose_name='Клиент')
@@ -73,12 +74,25 @@ class Zayavki  (models.Model):
     okrug = MultiSelectField(choices=OKRUG_SELECT, max_choices=12, max_length=30, null=True, verbose_name='Округ')
 
     square = models.DecimalField(max_digits=20, decimal_places=2, blank=False, verbose_name='площадь кв.м.')
-    price = models.DecimalField(max_digits=20, decimal_places=2, blank=False, default=0,  verbose_name='макс. цена, руб ')
+    price = models.DecimalField(max_digits=20, decimal_places=2, blank=False, default=0,  verbose_name='цена, руб ')
 
     is_published = models.BooleanField(default=True, verbose_name='Публикация')
     time_create = models.DateTimeField(auto_now_add=True, verbose_name='Создано')
 
-    scan=models.TextField(blank=True, null=True, verbose_name='Скан объектов')
+    scan=models.TextField(blank=True, null=True, default='0', verbose_name='Скан объектов')
+
+    def get_scan(self):
+        scancateg=self.scan
+        if (isinstance(scancateg,str)):
+            scancateg=scancateg.strip()
+            scancateg=scancateg.replace(' ', '')
+            if len(scancateg) > 0:
+                result = 1
+            else:
+                result = 0
+            if scancateg == '0': result = -1
+        else: result=-1
+        return result
 
     def __str__(self):
         result=f"Заявка: id{self.id}  {self.categ}  {self.client}"
@@ -86,14 +100,6 @@ class Zayavki  (models.Model):
 
     def get_okruga(self):
         result=utils.get_okrug_titles.go(self)
-        return result
-
-    def get_scan(self):
-        scancateg=self.scan
-        scancateg=scancateg.strip()
-        scancateg=scancateg.replace(' ', '')
-        if len(scancateg)>0: result=1
-        else: result=0
         return result
 
     def get_categ_title (self):
@@ -118,13 +124,16 @@ class Zayavki  (models.Model):
 
 class Export (models.Model):
     title=models.CharField(max_length=255, verbose_name='Название')
-    is_using=models.BooleanField(default=True, verbose_name='Применяется')
+
+    using_select = (('0', 'Не отправлять'), ('1', 'Отправлять по выбору'),('2', 'Отправлять всё'),)
+    using = models.CharField(max_length=5, choices=using_select, blank=False, null=True, verbose_name='Что отправлять', )
+
     def get_absolute_url (self): return reverse('export_ref',kwargs={'export_id':self.pk})
     def __str__(self):return  self.title
     class Meta:
         verbose_name='Выгрузка'
         verbose_name_plural= 'Выгрузки'
-        ordering=['title', 'is_using']
+        ordering=['title', 'using']
 
 
 #------------  Scanresult -------------------------

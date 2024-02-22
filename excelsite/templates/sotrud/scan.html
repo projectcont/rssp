@@ -9,7 +9,7 @@
 
 {% if scanned %}
 <h2>Сканирование выполнено</h2>
-<p> Получено {{ fits_number }}  соответствий </p>
+<p style="color:green; margin:auto; text-align:center"> Получено {{ fits_number }}  соответствий </p>
 {% else %}
 <div class="export_form_wrapper" >
 <form action=""  method="get" class="formscan" >
@@ -38,6 +38,44 @@
     <td> Сканировано заявок {{ zav_number }} </td>  <td   {% if check_zavs == 0  %} class="differ" {% endif %} >Сейчас заявок {{ zavs_bd }}  </td>
   </tr>
 </table>
+
+
+
+
+{% if scanned %}
+
+<table>
+  <tr>
+    <td style="width:70%">
+
+        <div id="check" style="margin-top:30px">
+        <h3 > Проверка заполнения объектов </h3>
+        <strong> Когда объекты добавляются в каталог, некоторые ошибки заполнения могут привести к тому,<br/>
+            что объект не будет экспортирован на внешний ресурс (Avito и др.) </strong>
+            <br/><br/>
+        {% autoescape off %}
+          {{check_results}}
+        {% endautoescape %}
+        </div>
+
+
+    </td>
+
+      <td>
+              <div>
+                  <h3 > Отправка на Avito </h3>
+            На Avito отправлено {{ counter_avito }} объектов. <br/>Один объект может быть в списке 2 раза, если он к аренде и продаже.
+             <br/>  Avito-xml файл <a href="/filesexp/avito.xml"> по ссылке <a/>
+             </div>
+
+      </td>
+  </tr>
+</table>
+
+
+
+{% endif %}
+
 
 
 

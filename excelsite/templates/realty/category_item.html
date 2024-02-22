@@ -51,12 +51,9 @@ url {% if item.photo %}
                         Подробнее...
                     </a>
 
-                  {% if user.is_authenticated %}
-                 <a href="{%  url 'showzavs_ref'  item.pk item.categ %}"  class="showzavs">
-                        Заявки22
-                    </a>
 
-                 {% else %} {% endif %}
+ {% include "realty/zav_button.html" %}
+
 
              </div> <!-- blog_content  -->
 

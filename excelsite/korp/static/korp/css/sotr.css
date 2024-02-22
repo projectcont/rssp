@@ -28,9 +28,7 @@ form.filter {width:100%; margin:0; padding:20px 0; background-color:#6cf7b7; mar
 form.filter table td {  padding:0 9px ;  border:0px solid green; }
 #content form.filter a.remove_filter {font-size:12px; line-height:15px; font-weight:400 }
 
-#content table.zayavki a {  width:170px; padding:5px 0; display: block;   margin:0;font-weight:400; font-size:12px; line-height:15px; text-align:center}
-#content table.zayavki a.select   { background-color:#85c4ed; color:#3983b4; }
-#content table.zayavki a.selecthl { background-color:green; color:#fff;}
+
 
 
 #sotr_itempage textarea {font-size:17px; line-height:20px;}
@@ -81,4 +79,8 @@ div.blog_item * {text-align:left; margin:auto;  }
 
 #content table.realty_prop  * {font-weight:800;font-size:14px; line-height:17px;}
 
+#content #check p, #content #check strong {font-size:12px; line-height:17px;}
 
+
+table.realty_prop {  border:2px solid green; margin-bottom:10px; background-color:#c6ee85}
+table.realty_prop td {padding-left:10px} 

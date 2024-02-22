@@ -14,7 +14,6 @@ def go ():
     proizv_items = Proizv.objects.filter(is_published=True)
     sklad_items = Sklad.objects.filter(is_published=True)
     psn_items = Psn.objects.filter(is_published=True)
-    retail_items = Retail.objects.filter(is_published=True)
     land_items = Land.objects.filter(is_published=True)
     flat_items = Flat.objects.filter(is_published=True)
 
@@ -24,7 +23,7 @@ def go ():
     all_items.extend(proizv_items)
     all_items.extend(sklad_items)
     all_items.extend(psn_items)
-    all_items.extend(retail_items)
+
     all_items.extend(land_items)
     all_items.extend(flat_items)
 

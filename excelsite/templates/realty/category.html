@@ -4,8 +4,12 @@
 
 {% block content %}
 
+<!--  filter form  -->
+      {% include "sotrud/filter_realty.html" %}
+<!--  filter form  -->
 
 <div class="blog">
+
 
 {%  for item in items  %}
     {% if item.is_published %}

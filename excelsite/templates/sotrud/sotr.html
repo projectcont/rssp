@@ -28,7 +28,7 @@
      <a href="/userlux/"> Управление  </a>
 
 
-     <a href=""> Выйти  </a>
+     <a href=" {% url 'logout' %}"> Выйти </a>
      <span>{% if user.is_authenticated %}  Вы в системе, {{  user.first_name }} {% else %} {% endif %}</span>
 
 

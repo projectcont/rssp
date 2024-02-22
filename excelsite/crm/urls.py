@@ -1,11 +1,12 @@
 from django.urls import path
 from .views import *
-from django.views.static import serve
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
 
     #path('clients/<int:menu_id>/', show_clients, name="clients_ref"),
     #path('requests/<int:pk>/', requests, name="requests_ref"),
+    path('login/', LoginUser.as_view(), name='login_ref'),
 
 
     path('req/', requests, name="request_ref", kwargs={"menuitem": 1002, }),

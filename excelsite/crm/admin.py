@@ -21,14 +21,15 @@ class ScansetAdmin(admin.ModelAdmin):
     list_display = ('id', 'realty_number', 'zav_number' ,'price_offset' ,'square_offset' ,'time_update' ,)
     list_display_links = ('id', )
 
-''' 
+
 class ExportAdmin(admin.ModelAdmin):
-    list_display = ( 'title','is_using',  )
-'''
+    list_display = ( 'title','using', 'id' )
+
 
 admin.site.register(Client, ClientAdmin)
 admin.site.register(Zayavki, ZayavkiAdmin)
 admin.site.register(Scanset, ScansetAdmin)
+admin.site.register(Export, ExportAdmin)
 
 
 #admin.site.register(Export, ExportAdmin)

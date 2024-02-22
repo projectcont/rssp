@@ -22,7 +22,7 @@
 
     <div style="width:30%" >
 
-
+        {% include "realty/zav_button.html" %}
 
    {% if item.price_rent  %}  <h2> Цена  <span style="color:#dd7a04"> (аренды)</span>:&nbsp;&nbsp; {{item.price_rent | space_format }} руб./месяц    </h2> {% endif %}
    {% if item.price_sale  %}  <h2> Цена  <span style="color:#dd7a04"> (продажи)</span>: {{item.price_sale | space_format }} руб.           </h2> {% endif %}
@@ -40,7 +40,7 @@
 
     </div>
 
-    <div style="width:65%" > <p> {% if item.description  %} {{ item.description   }} {% endif %} </p> </div>
+    <div style="width:65%" > <p> {% if item.description  %} {{ item.description | safe   }} {% endif %} </p> </div>
 
 </div> <!-- flexcontainer -->
 

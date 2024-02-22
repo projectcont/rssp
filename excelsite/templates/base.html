@@ -17,6 +17,8 @@
  <link href='https://fonts.googleapis.com/css?family=PT+Sans:400,700&amp;subset=latin,cyrillic-ext' rel='stylesheet' type='text/css'>
  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500&display=swap" rel="stylesheet">
 
+  <meta name="viewport" content="width=1150">  
+
 </head>
 
 <body >
@@ -26,7 +28,7 @@
 <!--   top   -->
 <div class="wrapper" id="top" >
        <div class="center"  >
-	   {% include "includes/_top.html" %}
+           {% include "includes/_top.html" %}
         </div>    <!--  center    -->
    </div>         <!--   wrapper   -->
 <!--   top   -->
@@ -61,7 +63,7 @@
 {% if page.pk == 1 %}
   <div class="wrapper slider2"  >
        <div class="center" >
-	 {% include "includes/_popular.html" %}
+         {% include "includes/_popular.html" %}
         </div>    <!--  center    -->
    </div>         <!--   wrapper   -->
 {% endif %}
@@ -73,45 +75,27 @@
 {% if page.pk == 1 %}
   <div class="wrapper slider"  >
        <div class="center" >
-	 {% include "includes/_preim.html" %}
+         {% include "includes/_preim.html" %}
         </div>    <!--  center    -->
    </div>         <!--   wrapper   -->
 {% endif %}
 <!--   preim   -->
 
 
-
-
-
-
-
-{% if menuitem == 1002 %}
-<div class="wrapper" style="background-color:#07356c "  >
- <div class="center usermenu" id="usermenu">
-        <a href="{%  url 'request_ref'  %}"   >Заявки (подбор объектов)</a>
-       <a href="{%  url 'formatfotos_ref'  %}">Форматирование фото</a>
-      <a href=""> Выйти  </a>
- </div>
-</div>
-{% endif %}
-
-
-
 <!--   content   -->
   <div class="wrapper" >
-       <div class="center" id="content" >
-
+       <div class="center" id="content"  >
 
            {% if user.is_authenticated %}
            <div>
-           <a href="/crm/req/">Управление</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="">Выйти</a>&nbsp;&nbsp;&nbsp;&nbsp;<span> Вы в системе, {{  user.first_name }} </span>
-               </div>
+           <a href="{%  url 'request_ref'  %}">Управление</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=" {% url 'logout' %}"> Выйти </a>&nbsp;&nbsp;&nbsp;&nbsp;<span> Вы в системе, {{  user.first_name }} </span>
+           </div>
            {% else %} {% endif %}
 
-
-
         <h1>   {{ title }} {{ doptitle }} </h1>
-	    {% block content %}   {% endblock %}
+            {% block content %}   {% endblock %}
+
+
         </div>    <!--  center    -->
    </div>         <!--   wrapper   -->
 <!--   content   -->
@@ -121,7 +105,7 @@
 <!--   polosa   -->
   <div class="wrapper under" >
        <div class="center" >
-	 {% include "includes/_polosa.html" %}
+         {% include "includes/_polosa.html" %}
         </div>    <!--  center    -->
    </div>         <!--   wrapper   -->
 <!--   polosa   -->
@@ -137,14 +121,21 @@ div.under {background-image:url('{%  static 'korp/images/fon2.jpg' %}'); }
 
 
 
-<!--
-<a href="/accounts/login/"> Логин </a>
-<a href="/korp/userpage/"> Тест2 </a>
--->
+ {% if user.is_authenticated %}
+<a href="{%  url 'request_ref'  %}"> Заявки </a><br/>
+ <a href=" {% url 'logout' %}"> Выйти </a>
+           {% else %}
+<a href="{%  url 'request_ref'  %}"> Заявки </a>
+<br/>
+<a href="{%  url 'login_ref'  %}"> Логин </a>
+{% endif %}
 
-<a href="/crm/req/"> Заявки </a>
+
+
+
 
  {{  user.username }}
+
 
 
 </body>

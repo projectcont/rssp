@@ -8,17 +8,16 @@
 
 {% if next %}
   {% if user.is_authenticated %}
-    <p>Your account doesn't have access to this page. To proceed,
-    please login with an account that has access.</p>
+    <p> У вас нет достаточного уровня доступа в систему</p>
   {% else %}
-    <p>Please login to see this page.</p>
+    <p> Для доступа к этой странице - пожалуйста войдите в систему </p>
   {% endif %}
 {% endif %}
 
 <form method="post" action="{% url 'login' %}" id="loginform">
 {% csrf_token %}
 
-    <h3>Логин для сотрудников компании ГЕБО КОММЕРЦ</h3>
+    <h3>Внешний доступ для сотрудников компании ГЕБО КОММЕРЦ</h3>
 <table>
 
 <tr>
